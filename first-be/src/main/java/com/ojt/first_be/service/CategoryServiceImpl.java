@@ -21,6 +21,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public SaveExcelResponse saveExcelData(String fileName, InputStream fileInputStream) throws IOException {
 
+        validFile(fileName, fileInputStream);
+
+        return SaveExcelResponse.builder().build();
+    }
+
+    private static void validFile(String fileName, InputStream fileInputStream) throws IOException {
+
         if (!PostExcelHandler.canParse(fileName)) {
             throw new RuntimeException("임시" + "확장자가 다르다는 메시지");
         }
@@ -31,7 +38,5 @@ public class CategoryServiceImpl implements CategoryService {
             throw new RuntimeException("임시" + "카테고리에 해당하는 엑셀 폼이 아님");
         }
 
-
-        return SaveExcelResponse.builder().build();
     }
 }
