@@ -1,8 +1,10 @@
 package com.ojt.first_be.util.excel;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +13,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@Slf4j
 @Component
 public class PostExcelHandler {
 
@@ -31,12 +34,12 @@ public class PostExcelHandler {
     /**
      * 해당 파일의 첫 번째 줄 데이터(Header)를 List로 반환
      *
-     * @param inputStream 확인할 Excel 파일의 InputStream (uploadFile.getInputStream())
+     * @param  targetFile 헤더를 가져올 대상 파일
      * @return 첫 번째 줄 데이터 문자열 리스트
      */
-    public static List<String> getHeaders(InputStream inputStream) throws IOException {
+    public static List<String> getHeaders(MultipartFile targetFile) throws IOException {
 
-        Workbook wb = WorkbookFactory.create(inputStream);
+        Workbook wb = WorkbookFactory.create(targetFile.getInputStream());
 
         Iterator<Cell> headersIterator = getHeadersIterator(wb);    // Header 정보인 0번째 sheet의 0번째 row의 Iterator를 가져욘다.
         List<String> headers = toStringList(headersIterator);       // Iterator를 List<String>으로 변환

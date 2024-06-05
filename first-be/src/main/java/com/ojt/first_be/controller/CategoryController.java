@@ -23,7 +23,7 @@ public class CategoryController {
     @PostMapping
     public SaveExcelResponse uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
 
-        return categoryService.saveExcelData(excelFile.getOriginalFilename(), excelFile.getInputStream());
+        return categoryService.saveExcelData(excelFile);
     }
 
 }
