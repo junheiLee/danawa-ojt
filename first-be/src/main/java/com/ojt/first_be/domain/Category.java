@@ -6,12 +6,12 @@ import lombok.ToString;
 @ToString
 public class Category {
 
-    private final int categoryCode;
-    private final String categoryName;
+    private final int code;
+    private final String name;
 
     @Builder
-    public Category(int categoryCode, String categoryName) {
-        this.categoryCode = categoryCode;
-        this.categoryName = categoryName;
+    public Category(int code, String name) {
+        this.code = code;
+        this.name = name;
     }
 }

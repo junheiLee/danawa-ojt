@@ -21,8 +21,8 @@ public class CategoryController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SaveExcelResponse uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
-
+    public SaveExcelResponse uploadExcelData(@RequestParam MultipartFile excelFile, @RequestParam String condition) throws IOException {
+        log.info("controller condition={}", condition);
         return categoryService.saveExcelData(excelFile);
     }
 

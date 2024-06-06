@@ -1,6 +1,6 @@
 spring:
   application:
-    name: portfolio
+    name: ojtProject
   profiles:
     active: local
   messages:
@@ -10,3 +10,6 @@ spring:
     url: jdbc:mariadb://localhost:3306/dbOjtProject
     username: root
     password: jhlee
+
+mybatis:
+  type-aliases-package: com.ojt.first_be.domain

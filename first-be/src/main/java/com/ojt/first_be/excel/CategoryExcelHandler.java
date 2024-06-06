@@ -28,8 +28,8 @@ public class CategoryExcelHandler implements ExcelHandler {
 
             categories.add(
                     Category.builder()
-                    .categoryCode((int) row.getCell(0).getNumericCellValue())
-                    .categoryName(row.getCell(1).getStringCellValue())
+                    .code((int) row.getCell(0).getNumericCellValue())
+                    .name(row.getCell(1).getStringCellValue().trim())
                     .build()
             );
         }

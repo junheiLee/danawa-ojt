@@ -1,5 +1,6 @@
 package com.ojt.first_be.service;
 
+import com.ojt.first_be.dao.CategoryDao;
 import com.ojt.first_be.domain.Category;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.excel.CategoryExcelHandler;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
@@ -21,6 +21,7 @@ import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryExcelHandler categoryExcelHandler;
+    private final CategoryDao categoryDao;
 
     @Override
     public SaveExcelResponse saveExcelData( MultipartFile excelFile) throws IOException {
@@ -28,6 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
         validFile(excelFile);
         List<Category> categories = categoryExcelHandler.toObjectList(excelFile.getInputStream());
         log.info("categories={}", categories.toString());
+
+        categoryDao.saveCategoryList(categories);
+
         return SaveExcelResponse.builder().build();
     }
     
