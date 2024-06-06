@@ -4,10 +4,12 @@ import com.ojt.first_be.dao.CategoryDao;
 import com.ojt.first_be.domain.Category;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.excel.CategoryExcelHandler;
+import com.ojt.first_be.util.batch.BatchUtil;
 import com.ojt.first_be.util.excel.PostExcelHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,24 +19,27 @@ import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryExcelHandler categoryExcelHandler;
     private final CategoryDao categoryDao;
+    private final BatchUtil batchUtil;
 
+    @Transactional
     @Override
-    public SaveExcelResponse saveExcelData( MultipartFile excelFile) throws IOException {
+    public SaveExcelResponse<Object> saveExcelData(MultipartFile excelFile) throws IOException {
 
         validFile(excelFile);
         List<Category> categories = categoryExcelHandler.toObjectList(excelFile.getInputStream());
-        log.info("categories={}", categories.toString());
 
-        categoryDao.saveCategoryList(categories);
-
-        return SaveExcelResponse.builder().build();
+        return  batchUtil.process(
+                categories,
+                categoryDao::saveCategoryList,
+                categoryDao::saveCategory);
     }
-    
+
     private static void validFile(MultipartFile targetFile) throws IOException {
 
         if (!PostExcelHandler.canParse(targetFile.getOriginalFilename())) {

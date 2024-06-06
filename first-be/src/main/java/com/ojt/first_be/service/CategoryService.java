@@ -1,10 +1,10 @@
 package com.ojt.first_be.service;
 
+import com.ojt.first_be.domain.Category;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public interface CategoryService {
 
@@ -15,5 +15,5 @@ public interface CategoryService {
      * @return
      * @throws IOException
      */
-    SaveExcelResponse saveExcelData(MultipartFile multipartFile) throws IOException;
+    SaveExcelResponse<Object> saveExcelData(MultipartFile multipartFile) throws IOException;
 }

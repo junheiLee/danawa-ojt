@@ -1,8 +1,10 @@
 package com.ojt.first_be.domain;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public class Category {
 

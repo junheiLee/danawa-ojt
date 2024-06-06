@@ -4,7 +4,7 @@
 
 <mapper namespace="com.ojt.first_be.dao.mapper.CategoryMapper">
 
-    <insert id="save" parameterType="Category">
+    <insert id="insertCategories" parameterType="Category">
         INSERT INTO tCategory (
                     nCategoryCode,
                     sCategoryName)
@@ -15,5 +15,15 @@
                 #{Category.name}
             )
         </foreach>
+    </insert>
+
+    <insert id="insertCategory">
+        INSERT INTO tCategory (
+                nCategoryCode,
+                sCategoryName)
+        VALUES (
+                #{Category.code},
+                #{Category.name}
+        )
     </insert>
 </mapper>

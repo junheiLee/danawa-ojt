@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -34,7 +33,7 @@ public class PostExcelHandler {
     /**
      * 해당 파일의 첫 번째 줄 데이터(Header)를 List로 반환
      *
-     * @param  targetFile 헤더를 가져올 대상 파일
+     * @param targetFile 헤더를 가져올 대상 파일
      * @return 첫 번째 줄 데이터 문자열 리스트
      */
     public static List<String> getHeaders(MultipartFile targetFile) throws IOException {
