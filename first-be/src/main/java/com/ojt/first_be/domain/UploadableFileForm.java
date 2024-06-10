@@ -30,6 +30,7 @@ public enum UploadableFileForm {
     private final List<String> headers;
 
     UploadableFileForm(String condition, List<String> headers) {
+
         this.condition = condition;
         this.headers = headers;
     }

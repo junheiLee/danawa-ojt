@@ -1,4 +1,4 @@
 package com.ojt.first_be.domain;
 
-public class Partner {
+public class Partner implements Uploadable {
 }

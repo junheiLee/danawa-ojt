@@ -1,5 +1,6 @@
 package com.ojt.first_be.util.excel;
 
+import com.ojt.first_be.domain.Uploadable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -7,14 +8,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Function;
 
 @Slf4j
 @Component
-public class PostExcelHandler {
+public class ExcelHandler {
 
     private final static String[] EXCEL_EXTENSIONS = {"xls", "xlsx"};
 
@@ -63,6 +66,33 @@ public class PostExcelHandler {
             headers.add(cell.getStringCellValue());
         }
         return headers;
+    }
+
+    /**
+     * 엑셀 파일을 한 줄씩 읽어 객체로 변경
+     *
+     * @param inputStream          대상 엑셀 파일의 inputStream
+     * @param itemBuilderFromExcel 엑셀 파일이 담고 있는 객체를 Row로 부터 가져오는 함수
+     * @param <T>                  엑셀 파일을 읽어 db에 저장할 수 있는 객체
+     * @return 객체 리스트
+     */
+    public <T extends Uploadable> List<T> getObjectList(InputStream inputStream,
+                                                        Function<Row, T> itemBuilderFromExcel) throws IOException {
+
+        List<T> items = new ArrayList<>();
+        Workbook wb = WorkbookFactory.create(inputStream);
+        Sheet sheet = wb.getSheetAt(0);
+
+        for (Row row : sheet) {
+
+            // 최초 Row는 개별 값이 아닌 헤더값
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+
+            items.add(itemBuilderFromExcel.apply(row));
+        }
+        return items;
     }
 
 }
