@@ -16,7 +16,6 @@ import java.io.IOException;
 @RestController
 public class CategoryController {
 
-
     private final CategoryService categoryService;
 
     @ResponseStatus(HttpStatus.CREATED)

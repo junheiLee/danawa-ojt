@@ -1,6 +1,8 @@
 package com.ojt.first_be.util.excel;
 
+import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.domain.Uploadable;
+import com.ojt.first_be.domain.UploadableFileForm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -15,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
+import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
+
 @Slf4j
 @Component
 public class ExcelHandler {
@@ -22,24 +26,33 @@ public class ExcelHandler {
     private final static String[] EXCEL_EXTENSIONS = {"xls", "xlsx"};
 
     /**
-     * 해당 파일이 Excel 확장자(.xlsx, .xls)인지 확인
+     * 해당 파일이 Excel 확장자(.xlsx, .xls)인지, 파싱해서 저장할 수 있는 형식인지 확인
      *
-     * @param fileName 확인할 파일 이름 (uploadFile.getOriginalFilename())
-     * @return Excel 파일이 맞을 경우 true 반환
+     * @param targetFile    대상 파일
+     * @param fileForm      파싱해서 저장할 형식
+     * @return              결과 코드
      */
-    public static boolean canParse(String fileName) {
+    public static ResultCode check(MultipartFile targetFile, UploadableFileForm fileForm) throws IOException {
+
+        if (!isExcel(targetFile.getOriginalFilename())) {
+            return ResultCode.NOT_EXCEL_FILE;
+        }
+
+        List<String> headers = getHeaders(targetFile);
+        if (!fileForm.canSave(headers)) {
+            return ResultCode.NOT_TARGET_FORM;
+        }
+
+        return ResultCode.POSSIBLE;
+    }
+
+    private static boolean isExcel(String fileName) {
 
         String extension = FilenameUtils.getExtension(fileName);
         return Arrays.asList(EXCEL_EXTENSIONS).contains(extension);
     }
 
-    /**
-     * 해당 파일의 첫 번째 줄 데이터(Header)를 List로 반환
-     *
-     * @param targetFile 헤더를 가져올 대상 파일
-     * @return 첫 번째 줄 데이터 문자열 리스트
-     */
-    public static List<String> getHeaders(MultipartFile targetFile) throws IOException {
+    private static List<String> getHeaders(MultipartFile targetFile) throws IOException {
 
         Workbook wb = WorkbookFactory.create(targetFile.getInputStream());
 
@@ -76,7 +89,7 @@ public class ExcelHandler {
      * @param <T>                  엑셀 파일을 읽어 db에 저장할 수 있는 객체
      * @return 객체 리스트
      */
-    public <T extends Uploadable> List<T> getObjectList(InputStream inputStream,
+    public static <T extends Uploadable> List<T> getObjectList(InputStream inputStream,
                                                         Function<Row, T> itemBuilderFromExcel) throws IOException {
 
         List<T> items = new ArrayList<>();

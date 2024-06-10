@@ -22,7 +22,7 @@ public class BatchUtil {
      * @param <T>                처리하는 객체 타입
      * @return 저장 결과 (성공, 실패 개수 등 로직 성공 여부)
      */
-    public <T> SaveExcelResponse<Object> process(List<T> items,
+    public static <T> SaveExcelResponse<Object> process(List<T> items,
                                                  Function<List<T>, Integer> batchSaveFunction,
                                                  Function<T, Integer> singleSaveFunction) {
 
