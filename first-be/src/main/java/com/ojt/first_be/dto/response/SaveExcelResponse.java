@@ -8,16 +8,16 @@ import java.util.List;
 
 @Getter
 @ToString
-public class SaveExcelResponse extends BaseResponse {
+public class SaveExcelResponse<E> extends BaseResponse {
 
     private final int successCount;
     private final int failedCount;
-    private final List<Object> falidList;
+    private final List<E> falidList;
 
     @Builder
     public SaveExcelResponse(String code, String message,
                              int successCount, int failedCount,
-                             List<Object> falidList) {
+                             List<E> falidList) {
         super(code, message);
         this.successCount = successCount;
         this.failedCount = failedCount;

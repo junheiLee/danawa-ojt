@@ -8,4 +8,5 @@ public interface CategoryDao {
 
     int saveCategoryList(List<Category> categories);
 
+    int saveCategory(Category category);
 }

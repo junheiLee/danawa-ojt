@@ -1,7 +1,10 @@
 package com.ojt.first_be.excel;
 
 import com.ojt.first_be.domain.Category;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -21,11 +24,16 @@ public class CategoryExcelHandler implements ExcelHandler {
 
         for (Row row : sheet) {
 
+            // 최초 Row는 값이 아닌 헤더값
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+
             categories.add(
                     Category.builder()
-                    .categoryCode((int) row.getCell(0).getNumericCellValue())
-                    .categoryName(row.getCell(1).getStringCellValue())
-                    .build()
+                            .code((int) row.getCell(0).getNumericCellValue())
+                            .name(row.getCell(1).getStringCellValue().trim())
+                            .build()
             );
         }
         return categories;
