@@ -4,20 +4,20 @@
 
 <mapper namespace="com.ojt.first_be.dao.mapper.CategoryMapper">
 
-    <insert id="insertCategories" parameterType="Category">
+    <insert id="insertAll" parameterType="Category">
         INSERT INTO tCategory (
-                    nCategoryCode,
-                    sCategoryName)
+                nCategoryCode,
+                sCategoryName)
         VALUES
-        <foreach collection="list" item="Category" separator="," >
-            (
+            <foreach collection="list" item="Category" separator="," >
+                (
                 #{Category.code},
                 #{Category.name}
-            )
-        </foreach>
+                )
+            </foreach>
     </insert>
 
-    <insert id="insertCategory">
+    <insert id="insert">
         INSERT INTO tCategory (
                 nCategoryCode,
                 sCategoryName)

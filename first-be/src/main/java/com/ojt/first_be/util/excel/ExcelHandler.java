@@ -17,8 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
-
 @Slf4j
 @Component
 public class ExcelHandler {
@@ -28,9 +26,9 @@ public class ExcelHandler {
     /**
      * 해당 파일이 Excel 확장자(.xlsx, .xls)인지, 파싱해서 저장할 수 있는 형식인지 확인
      *
-     * @param targetFile    대상 파일
-     * @param fileForm      파싱해서 저장할 형식
-     * @return              결과 코드
+     * @param targetFile 대상 파일
+     * @param fileForm   파싱해서 저장할 형식
+     * @return 결과 코드
      */
     public static ResultCode check(MultipartFile targetFile, UploadableFileForm fileForm) throws IOException {
 
@@ -90,7 +88,7 @@ public class ExcelHandler {
      * @return 객체 리스트
      */
     public static <T extends Uploadable> List<T> getObjectList(InputStream inputStream,
-                                                        Function<Row, T> itemBuilderFromExcel) throws IOException {
+                                                               Function<Row, T> itemBuilderFromExcel) throws IOException {
 
         List<T> items = new ArrayList<>();
         Workbook wb = WorkbookFactory.create(inputStream);
@@ -102,9 +100,10 @@ public class ExcelHandler {
             if (row.getRowNum() == 0) {
                 continue;
             }
-
             items.add(itemBuilderFromExcel.apply(row));
+
         }
+        wb.close();
         return items;
     }
 

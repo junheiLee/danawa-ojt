@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ojt.first_be.dao.mapper.PartnerMapper">
+
+    <insert id="insertAll" parameterType="Partner">
+        INSERT INTO tPartner (
+                sPartnerCode,
+                sPartnerName)
+        VALUES
+            <foreach collection="list" item="Partner" separator=",">
+                (
+                 #{Partner.code},
+                 #{Partner.name}
+                )
+            </foreach>
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO tPartner (
+                sPartnerCode,
+                sPartnerName)
+        VALUES (
+                #{Partner.code},
+                #{Partner.name}
+               )
+    </insert>
+</mapper>

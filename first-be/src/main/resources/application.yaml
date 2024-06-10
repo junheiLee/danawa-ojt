@@ -3,8 +3,14 @@ spring:
     name: ojtProject
   profiles:
     active: local
+
   messages:
     basename: errors
+
+  servlet:
+    multipart:
+      maxFileSize: 30MB # 파일 하나의 최대 크기
+      maxRequestSize: 30MB
 
   datasource:
     url: jdbc:mariadb://localhost:3306/dbOjtProject
@@ -13,3 +19,4 @@ spring:
 
 mybatis:
   type-aliases-package: com.ojt.first_be.domain
+

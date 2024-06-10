@@ -25,13 +25,14 @@ import static com.ojt.first_be.domain.UploadableFileForm.CATEGORY;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+    private final BatchUtil batchUtil;
     private final BuilderFromRow builderFromRow;
     private final CategoryDao categoryDao;
 
-    @Transactional
     @Override
     public SaveExcelResponse<Object> saveExcelData(MultipartFile excelFile) throws IOException {
 
+        // 파일이 Excel 확장자(.xlsx, .xls)인지, Category 파일인지 확인
         ResultCode resultCode = ExcelHandler.check(excelFile, CATEGORY);
         if (resultCode != POSSIBLE) {
             throw new RuntimeException("임시" + resultCode.getMessage());
@@ -40,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories
                 = ExcelHandler.getObjectList(excelFile.getInputStream(), builderFromRow::buildCategory);
 
-        return BatchUtil.process(categories, categoryDao::saveCategoryList, categoryDao::saveCategory);
+        return batchUtil.process(categories, categoryDao::saveAll, categoryDao::save);
     }
 
 }

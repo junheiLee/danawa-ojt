@@ -1,6 +1,7 @@
 package com.ojt.first_be.util.batch;
 
 import com.ojt.first_be.dto.response.SaveExcelResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.function.Function;
 
 import static com.ojt.first_be.constant.BatchConstant.BASIC_BATCH_SIZE;
 
+@Slf4j
 @Component
 public class BatchUtil {
 
@@ -22,7 +24,7 @@ public class BatchUtil {
      * @param <T>                처리하는 객체 타입
      * @return 저장 결과 (성공, 실패 개수 등 로직 성공 여부)
      */
-    public static <T> SaveExcelResponse<Object> process(List<T> items,
+    public <T> SaveExcelResponse<Object> process(List<T> items,
                                                  Function<List<T>, Integer> batchSaveFunction,
                                                  Function<T, Integer> singleSaveFunction) {
 
@@ -38,14 +40,15 @@ public class BatchUtil {
             try {
                 successRow += batchSaveFunction.apply(batchItems);
 
-            } catch (Exception e) { // 일괄 처리 실패 시, 단건으로 저장하며 실패한 객체 정보를 보관
+            } catch (RuntimeException e) { // 일괄 처리 실패 시, 단건으로 저장하며 실패한 객체 정보를 보관
+                log.info("에러 메시지={}", e.getMessage());
 
                 for (T item : batchItems) {
 
                     try {
                         successRow += singleSaveFunction.apply(item);
 
-                    } catch (Exception exception) {
+                    } catch (RuntimeException exception) {
                         failedItems.add(item);
                     }
                 }

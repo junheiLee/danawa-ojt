@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper {
 
-    int insertCategories(List<Category> categories);
+    int insertAll(List<Category> categories);
 
-    int insertCategory(Category category);
+    int insert(Category category);
 }

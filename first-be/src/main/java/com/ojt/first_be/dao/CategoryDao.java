@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CategoryDao {
 
-    int saveCategoryList(List<Category> categories);
+    int saveAll(List<Category> categories);
 
-    int saveCategory(Category category);
+    int save(Category category);
 }
