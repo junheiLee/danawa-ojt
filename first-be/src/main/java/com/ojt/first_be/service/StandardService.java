@@ -23,5 +23,5 @@ public interface StandardService {
      * @param page 현재 페이지
      * @return 페이지에 해당하는 리스트
      */
-    StandardProductList getStandardProducts(int page, boolean requiredTotalPage);
+    StandardProductList getStandardProducts(int page, boolean isTotalPageRequired);
 }

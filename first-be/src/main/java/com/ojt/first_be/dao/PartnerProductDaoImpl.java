@@ -34,4 +34,16 @@ public class PartnerProductDaoImpl implements PartnerProductDao {
             throw new RuntimeException("임시" + "단일 실패");
         }
     }
+
+    @Override
+    public List<PartnerProduct> findAll(int limit, int offset) {
+
+        return partnerProductMapper.selectAll(limit, offset);
+    }
+
+    @Override
+    public int countAll() {
+
+        return partnerProductMapper.countAll();
+    }
 }

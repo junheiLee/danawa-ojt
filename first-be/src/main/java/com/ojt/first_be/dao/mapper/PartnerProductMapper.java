@@ -11,4 +11,9 @@ public interface PartnerProductMapper {
     int insertAll(List<PartnerProduct> partnerProducts);
 
     int insert(PartnerProduct partnerProduct);
+
+
+    List<PartnerProduct> selectAll(int limit, int offset);
+
+    int countAll();
 }

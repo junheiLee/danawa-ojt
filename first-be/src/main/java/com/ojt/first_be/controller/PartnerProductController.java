@@ -1,5 +1,6 @@
 package com.ojt.first_be.controller;
 
+import com.ojt.first_be.dto.response.PartnerProductList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.service.PartnerProductService;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +26,11 @@ public class PartnerProductController {
         return partnerProductService.saveExcelData(excelFile);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public PartnerProductList getStandardProducts(@RequestParam(defaultValue = "1") int page,
+                                                  @RequestParam(defaultValue = "false") boolean isTotalPageRequired) {
+
+        return partnerProductService.getPartnerProducts(page, isTotalPageRequired);
+    }
 }

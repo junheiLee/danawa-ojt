@@ -10,35 +10,42 @@ import java.sql.Date;
 @ToString
 public class PartnerProduct implements Uploadable {
 
-    private String code;
-    private String partnerCode;
     private int categoryCode;
+    private String categoryName;
+    private String partnerCode;
 
+    private String code;
     private String name;
+
     private int pcPrice;
     private int mobilePrice;
+
+    private Date createdAt;
 
     private String url;
     private String imageUrl;
 
-    private Date createdAt;
-
     @Builder
-    public PartnerProduct(String code, String partnerCode, int categoryCode,
-                          String name, int pcPrice, int mobilePrice,
-                          String url, String imageUrl,
-                          Date createdAt) {
-        this.code = code;
-        this.partnerCode = partnerCode;
-        this.categoryCode = categoryCode;
+    public PartnerProduct(int categoryCode, String categoryName, String partnerCode,
+                          String code, String name,
+                          int pcPrice, int mobilePrice,
+                          Date createdAt,
+                          String url, String imageUrl) {
 
+        this.categoryCode = categoryCode;
+        this.categoryName = categoryName;
+        this.partnerCode = partnerCode;
+
+        this.code = code;
         this.name = name;
+
         this.pcPrice = pcPrice;
         this.mobilePrice = mobilePrice;
 
+        this.createdAt = createdAt;
+
         this.url = url;
         this.imageUrl = imageUrl;
-        this.createdAt = createdAt;
 
     }
 }

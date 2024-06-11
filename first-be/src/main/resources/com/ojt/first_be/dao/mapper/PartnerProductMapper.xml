@@ -56,4 +56,27 @@
                 #{PartnerProduct.createdAt}
             )
     </insert>
+
+    <select id="selectAll" resultType="PartnerProduct">
+        SELECT  PP.nCategoryCode as categoryCode,
+                C.sCategoryName as categoryName,
+                PP.sPartnerCode as partnerCode,
+                PP.sPartnerProductCode as code,
+                PP.sPartnerProductName as name,
+                PP.nPcPrice as pcPrice,
+                PP.nMobilePrice as mobilePrice,
+                PP.dtCreatedAt as createdAt,
+                PP.sUrl as url,
+                PP.sImageUrl as imageUrl
+        FROM tPartnerProduct PP
+                 JOIN tCategory C
+                      ON (PP.nCategoryCode = C.nCategoryCode)
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(sPartnerProductCode)
+        FROM tPartnerProduct
+    </select>
 </mapper>
