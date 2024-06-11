@@ -34,4 +34,16 @@ public class StandardProductDaoImpl implements StandardProductDao {
             throw new RuntimeException("임시" + "단일 처리 실패");
         }
     }
+
+    @Override
+    public List<StandardProduct> findAll(int limit, int offset) {
+
+        return standardProductMapper.selectAll(limit, offset);
+    }
+
+    @Override
+    public int countAll() {
+
+        return standardProductMapper.countAll();
+    }
 }

@@ -24,4 +24,5 @@ public class PartnerProductController {
 
         return partnerProductService.saveExcelData(excelFile);
     }
+
 }

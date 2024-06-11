@@ -9,4 +9,8 @@ public interface StandardProductDao {
     int saveAll(List<StandardProduct> products);
 
     int save(StandardProduct product);
+
+    List<StandardProduct> findAll(int limit, int offset);
+
+    int countAll();
 }

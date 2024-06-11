@@ -12,4 +12,7 @@ public interface StandardProductMapper {
 
     int insert(StandardProduct product);
 
+    List<StandardProduct> selectAll(int limit, int offset);
+
+    int countAll();
 }

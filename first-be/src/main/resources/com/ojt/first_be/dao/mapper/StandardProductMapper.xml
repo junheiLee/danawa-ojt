@@ -52,4 +52,26 @@
                 #{StandardProduct.partnerCount}
         )
     </insert>
+
+    <select id="selectAll" resultType="StandardProduct">
+        SELECT  SP.nCategoryCode as categoryCode,
+                C.sCategoryName as categoryName,
+                SP.nProductCode as code,
+                SP.sProductName as name,
+                SP.sBundleCondition as bundleCondition,
+                SP.sDescription as description,
+                SP.nLowestPrice as lowestPrice,
+                SP.nAveragePrice as averagePrice,
+                SP.nPartnerCount as partnerCount
+        FROM tStandardProduct SP
+            JOIN tCategory C
+            ON (SP.nCategoryCode = C.nCategoryCode)
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(nProductCode)
+        FROM tStandardProduct
+    </select>
 </mapper>

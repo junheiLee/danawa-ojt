@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.ojt.first_be.constant.BatchConstant.BASIC_BATCH_SIZE;
+import static com.ojt.first_be.constant.Common.BATCH_SIZE;
 
 @Slf4j
 @Component
@@ -33,8 +33,8 @@ public class BatchUtil {
         int successRow = 0;
         List<Object> failedItems = new ArrayList<>(); // 실패한 로직을 담기 위한 List
 
-        for (int i = 0; i < totalSize; i += BASIC_BATCH_SIZE) {
-            endIdx = Math.min(i + BASIC_BATCH_SIZE, totalSize);
+        for (int i = 0; i < totalSize; i += BATCH_SIZE) {
+            endIdx = Math.min(i + BATCH_SIZE, totalSize);
             List<T> batchItems = items.subList(i, endIdx);
 
             try {

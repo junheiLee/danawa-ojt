@@ -1,6 +1,7 @@
 package com.ojt.first_be.service;
 
 import com.ojt.first_be.dto.response.SaveExcelResponse;
+import com.ojt.first_be.dto.response.StandardProductList;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,4 +16,12 @@ public interface StandardService {
      * @return 해당 정보 저장 성공 개수, 실패 개수 및 실패한 객체 정보 리스트
      */
     SaveExcelResponse<Object> saveExcelData(MultipartFile multipartFile) throws IOException;
+
+    /**
+     * 출력을 위해 페이징된 기준 상품 리스트를 가져오는 기능
+     *
+     * @param page 현재 페이지
+     * @return 페이지에 해당하는 리스트
+     */
+    StandardProductList getStandardProducts(int page, boolean requiredTotalPage);
 }

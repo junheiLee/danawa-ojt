@@ -1,6 +1,7 @@
 package com.ojt.first_be.controller;
 
 import com.ojt.first_be.dto.response.SaveExcelResponse;
+import com.ojt.first_be.dto.response.StandardProductList;
 import com.ojt.first_be.service.StandardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,13 @@ public class StandardProductController {
     public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
 
         return standardService.saveExcelData(excelFile);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public StandardProductList getStandardProducts(@RequestParam(defaultValue = "1") int page,
+                                                   @RequestParam(defaultValue = "false") boolean isTotalPageRequired) {
+
+        return standardService.getStandardProducts(page, isTotalPageRequired);
     }
 }

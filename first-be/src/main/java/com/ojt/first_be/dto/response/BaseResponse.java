@@ -9,11 +9,11 @@ import lombok.Getter;
 @Getter
 public class BaseResponse {
 
-    private String code;
+    private String resultCode;
     private String message;
 
-    public BaseResponse(String code, String message) {
-        this.code = code;
+    public BaseResponse(String resultCode, String message) {
+        this.resultCode = resultCode;
         this.message = message;
     }
 }

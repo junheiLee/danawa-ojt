@@ -8,8 +8,9 @@ import lombok.ToString;
 @ToString
 public class StandardProduct implements Uploadable {
 
-    private int code;
     private int categoryCode;
+    private String categoryName;
+    private int code;
 
     private String name;
     private String bundleCondition;
@@ -20,13 +21,14 @@ public class StandardProduct implements Uploadable {
     private int partnerCount;
 
     @Builder
-    public StandardProduct(int code, int categoryCode,
-                           String name, String bundleCondition,
-                           String description,
+    public StandardProduct(int categoryCode, String categoryName,
+                           int code, String name,
+                           String bundleCondition, String description,
                            int lowestPrice, int averagePrice,
                            int partnerCount) {
-        this.code = code;
         this.categoryCode = categoryCode;
+        this.categoryName = categoryName;
+        this.code = code;
 
         this.name = name;
         this.description = description;
