@@ -1,11 +1,13 @@
 package com.ojt.first_be.util.paging;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
 
 import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
 
+@Slf4j
 @Component
 public class PagingUtil {
 
@@ -21,7 +23,7 @@ public class PagingUtil {
     }
 
     public static int calOffset(int page) {
-
+        log.info("return value={}", (Math.abs(page) - 1) * OUTPUT_LIST_LIMIT_SIZE);
         return (Math.abs(page) - 1) * OUTPUT_LIST_LIMIT_SIZE;
     }
 }

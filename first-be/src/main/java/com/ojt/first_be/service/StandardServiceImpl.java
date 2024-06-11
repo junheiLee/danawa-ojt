@@ -52,8 +52,7 @@ public class StandardServiceImpl implements StandardService {
     @Override
     public StandardProductList getStandardProducts(int page, boolean isTotalPageRequired) {
 
-        List<StandardProduct> standardProducts
-                = standardProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
+        List<StandardProduct> standardProducts = getProducts(page);
 
         // 총 페이지 수를 요구하면 DAO 에서 Count, 필요하지 않으면 null
         Integer totalPage = PagingUtil.getTotalPage(isTotalPageRequired, standardProductDao::countAll);
@@ -66,4 +65,16 @@ public class StandardServiceImpl implements StandardService {
                 .build();
     }
 
+    @Override
+    public byte[] createExcelFile(int page) throws IOException {
+
+        List<StandardProduct> standardProducts = getProducts(page);
+
+        return ExcelHandler.create(standardProducts, STANDARD_PRODUCT);
+    }
+
+    private List<StandardProduct> getProducts(int page) {
+
+        return standardProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
+    }
 }

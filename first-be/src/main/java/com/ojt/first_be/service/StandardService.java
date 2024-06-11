@@ -24,4 +24,6 @@ public interface StandardService {
      * @return 페이지에 해당하는 리스트
      */
     StandardProductList getStandardProducts(int page, boolean isTotalPageRequired);
+
+    byte[] createExcelFile(int page) throws IOException;
 }
