@@ -35,9 +35,15 @@ public enum UploadableFileForm {
         this.headers = headers;
     }
 
-    public boolean canSave(List<String> headers) {
+    public boolean canSaveTarget(List<String> headers) {
 
         return this.headers.equals(headers);
+    }
+
+    public static boolean canSave(List<String> headers) {
+
+        return Arrays.stream(UploadableFileForm.values())
+                .anyMatch(form -> form.getHeaders().equals(headers));
     }
 
 }
