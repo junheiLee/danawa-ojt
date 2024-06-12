@@ -38,7 +38,7 @@ public class PartnerProductServiceImpl implements PartnerProductService {
         }
 
         List<PartnerProduct> partnerProducts
-                = excelConverter.parse(excelFile.getInputStream(), PartnerProduct.class);
+                = excelConverter.parseExcel(excelFile.getInputStream(), PartnerProduct.class);
 
         return batchUtil.process(partnerProducts, partnerProductDao::saveAll, partnerProductDao::save);
     }
@@ -46,8 +46,7 @@ public class PartnerProductServiceImpl implements PartnerProductService {
     @Override
     public PartnerProductList getPartnerProducts(int page, boolean isTotalPageRequired) {
 
-        List<PartnerProduct> partnerProducts
-                = partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
+        List<PartnerProduct> partnerProducts = getProducts(page);
 
         // 총 페이지 수를 요구하면 DAO 에서 Count, 필요하지 않으면 null
         Integer totalPage = PagingUtil.getTotalPage(isTotalPageRequired, partnerProductDao::countAll);
@@ -58,5 +57,17 @@ public class PartnerProductServiceImpl implements PartnerProductService {
                 .totalPage(totalPage)
                 .products(partnerProducts)
                 .build();
+    }
+
+    @Override
+    public byte[] createExcelFile(int page) throws IOException {
+
+        List<PartnerProduct> partnerProducts = getProducts(page);
+        return excelConverter.createExcel(partnerProducts, PartnerProduct.class);
+    }
+
+    private List<PartnerProduct> getProducts(int page) {
+
+        return partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
     }
 }

@@ -6,7 +6,6 @@ import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.dto.response.StandardProductList;
 import com.ojt.first_be.util.batch.BatchUtil;
 import com.ojt.first_be.util.excel.ExcelConverter;
-import com.ojt.first_be.util.excel.old.ExcelHandler;
 import com.ojt.first_be.util.paging.PagingUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
 import static com.ojt.first_be.constant.ResultCode.SUCCESS;
-import static com.ojt.first_be.domain.UploadableFileForm.STANDARD_PRODUCT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,7 +38,7 @@ public class StandardServiceImpl implements StandardService {
         }
 
         List<StandardProduct> standardProducts
-                = excelConverter.parse(excelFile.getInputStream(), StandardProduct.class);
+                = excelConverter.parseExcel(excelFile.getInputStream(), StandardProduct.class);
 
         return batchUtil.process(standardProducts, standardProductDao::saveAll, standardProductDao::save);
     }
@@ -65,8 +63,7 @@ public class StandardServiceImpl implements StandardService {
     public byte[] createExcelFile(int page) throws IOException {
 
         List<StandardProduct> standardProducts = getProducts(page);
-
-        return ExcelHandler.create(standardProducts, STANDARD_PRODUCT);
+        return excelConverter.createExcel(standardProducts, StandardProduct.class);
     }
 
     private List<StandardProduct> getProducts(int page) {

@@ -6,7 +6,7 @@ import org.apache.poi.ss.usermodel.Row;
 
 public interface Uploadable {
 
-    void setValuesFormExcel(Row row);
+    void setValuesFromExcel(Row row);
 
     /**
      * 숫자 형태의 문자열 값에 CellType이 NUMERIC으로 설정 되어

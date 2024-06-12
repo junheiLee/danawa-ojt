@@ -13,7 +13,7 @@ import org.apache.poi.ss.usermodel.Row;
 public class Category implements Uploadable {
 
     @ExcelColumn(name = "대분류코드")
-    private Integer code;
+    private int code;
 
     @ExcelColumn(name = "대분류명")
     private String name;
@@ -25,7 +25,7 @@ public class Category implements Uploadable {
     }
 
     @Override
-    public void setValuesFormExcel(Row row) {
+    public void setValuesFromExcel(Row row) {
         this.code = (int) row.getCell(0).getNumericCellValue();
         this.name = row.getCell(1).getStringCellValue();
     }

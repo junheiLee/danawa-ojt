@@ -64,7 +64,7 @@ public class PartnerProduct implements Uploadable {
     }
 
     @Override
-    public void setValuesFormExcel(Row row) {
+    public void setValuesFromExcel(Row row) {
         this.categoryCode = (int) row.getCell(0).getNumericCellValue();
         this.partnerCode = getStringCellValue(row.getCell(2));
 

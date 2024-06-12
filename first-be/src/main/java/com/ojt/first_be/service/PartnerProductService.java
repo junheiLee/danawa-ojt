@@ -24,4 +24,13 @@ public interface PartnerProductService {
      * @return 페이지에 해당하는 리스트
      */
     PartnerProductList getPartnerProducts(int page, boolean isTotalPageRequired);
+
+    /**
+     * 현재 페이지를 엑셀 파일로 생성하는 기능
+     *
+     * @param page 현재 페이지
+     * @return 페이지에 해당하는 엑셀 byte[]
+     */
+    byte[] createExcelFile(int page) throws IOException;
+
 }

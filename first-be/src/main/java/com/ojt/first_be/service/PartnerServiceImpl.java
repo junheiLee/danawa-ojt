@@ -33,7 +33,7 @@ public class PartnerServiceImpl implements PartnerService {
         }
 
         List<Partner> partners
-                = excelConverter.parse(excelFile.getInputStream(), Partner.class);
+                = excelConverter.parseExcel(excelFile.getInputStream(), Partner.class);
 
         return batchUtil.process(partners, partnerDao::saveAll, partnerDao::save);
     }

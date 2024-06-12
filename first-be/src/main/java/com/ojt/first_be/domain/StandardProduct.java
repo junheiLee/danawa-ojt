@@ -39,6 +39,7 @@ public class StandardProduct implements Uploadable {
                            String bundleCondition, String description,
                            int lowestPrice, int averagePrice,
                            int partnerCount) {
+
         this.categoryCode = categoryCode;
         this.categoryName = categoryName;
         this.code = code;
@@ -54,7 +55,7 @@ public class StandardProduct implements Uploadable {
     }
 
     @Override
-    public void setValuesFormExcel(Row row) {
+    public void setValuesFromExcel(Row row) {
 
         this.categoryCode = (int) row.getCell(0).getNumericCellValue();
         this.code = (int) row.getCell(2).getNumericCellValue();

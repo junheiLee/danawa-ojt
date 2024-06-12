@@ -25,7 +25,7 @@ public class Partner implements Uploadable {
     }
 
     @Override
-    public void setValuesFormExcel(Row row) {
+    public void setValuesFromExcel(Row row) {
         this.code = row.getCell(0).getStringCellValue();
         this.name = row.getCell(1).getStringCellValue();
     }

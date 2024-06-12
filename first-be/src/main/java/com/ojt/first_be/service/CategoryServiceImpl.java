@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         List<Category> categories
-                = excelConverter.parse(excelFile.getInputStream(), Category.class);
+                = excelConverter.parseExcel(excelFile.getInputStream(), Category.class);
 
         return batchUtil.process(categories, categoryDao::saveAll, categoryDao::save);
     }
