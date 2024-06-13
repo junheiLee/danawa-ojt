@@ -1,0 +1,17 @@
+
+
+.Left-Layer {
+    width: 50%; 
+    min-width: 40rem;
+    background-color: aqua;
+    float: left;
+    position: relative;
+  }
+  
+  .Right-Layer {
+    width: 50%;  
+    min-width: 40rem;
+    float: left;
+    position: relative;
+  }
+  
