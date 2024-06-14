@@ -6,12 +6,16 @@
     background-color: aqua;
     float: left;
     position: relative;
-  }
+}
   
-  .Right-Layer {
+.Right-Layer {
     width: 50%;  
     min-width: 40rem;
     float: left;
     position: relative;
-  }
+}
+  
+.File-Upload {
+    text-align: left;
+}
   

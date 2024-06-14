@@ -1,5 +1,5 @@
 import Header from "../components/standard-products/Header"
-import Header from "../components/standard-products/ProductList"
+import ProductList from "../components/standard-products/ProductList"
 
 const StandardProducts = () => {
 
