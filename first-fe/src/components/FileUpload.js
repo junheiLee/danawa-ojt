@@ -2,23 +2,25 @@ import { uploadFile } from "../services/upload-service";
 
 const FileUpload = () => {
 
-    const onSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = async(e) => {
 
-        const formData = new FormData();
-        const files = document.getElementById("excelFile");
+        e.preventDefault();
+        const excelFile = document.getElementById("excelFile");
         const option = document.getElementById("option").value;
 
-        formData.append("excelFile", files.files[0]);
+        const formData = new FormData();
+        formData.append("excelFile", excelFile.files[0]);
+        
         uploadFile(option, formData);
     }
 
 
     return (
       <div>
-        <form method="post" encType="multipart/form-data">
+        <form onSubmit={ e => handleSubmit(e) }>
           <label> File Upload:  </label>
-          <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+          <input type="file" 
+                 required accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
                  name="excelFile" id="excelFile"></input> 
           <select id="option">
             <option value="category"> 카테고리 </option>
@@ -26,7 +28,7 @@ const FileUpload = () => {
             <option value="partners"> 협력사 </option>
             <option value="partner-products"> 협력사상품 </option>
           </select>
-          <button style={{marginLeft: "1rem"}} type="submit" onClick={(event) => onSubmit(event)}> 업로드 </button>
+          <input style={{marginLeft: "1rem"}} type="submit" value="업로드" />
         </form> 
       </div>
     )
