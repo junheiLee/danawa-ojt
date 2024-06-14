@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.ojt.first_be.constant.ResultCode.CREATED;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,9 +34,11 @@ public class PartnerServiceImpl implements PartnerService {
             throw new RuntimeException("임시");
         }
 
-        List<Partner> partners
-                = excelConverter.parseExcel(excelFile.getInputStream(), Partner.class);
+        List<Partner> partners = excelConverter.parseExcel(excelFile.getInputStream(), Partner.class);
 
-        return batchUtil.process(partners, partnerDao::saveAll, partnerDao::save);
+        SaveExcelResponse<Object> result = batchUtil.process(partners, partnerDao::saveAll, partnerDao::save);
+        result.setResultCode(CREATED);
+
+        return result;
     }
 }

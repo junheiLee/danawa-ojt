@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum ResultCode {
 
     SUCCESS("성공적으로 처리되었습니다."),
+    CREATED("생성: %d개, 실패: %d개"),
 
     POSSIBLE("처리 가능합니다."),
     NOT_EXCEL_FILE("Excel 파일 확장자가 아닙니다."),

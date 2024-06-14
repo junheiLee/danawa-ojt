@@ -5,7 +5,11 @@ import com.ojt.first_be.service.PartnerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,10 +22,14 @@ public class PartnerController {
 
     private final PartnerService partnerService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
+    public ResponseEntity<SaveExcelResponse<Object>> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
 
-        return partnerService.saveExcelData(excelFile);
+        SaveExcelResponse<Object> responseBody = partnerService.saveExcelData(excelFile);
+
+        if (responseBody.getSuccessCount() > 0) {
+            return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 }

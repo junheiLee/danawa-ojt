@@ -41,7 +41,6 @@ public class BatchUtil {
                 successRow += batchSaveFunction.apply(batchItems);
 
             } catch (RuntimeException e) { // 일괄 처리 실패 시, 단건으로 저장하며 실패한 객체 정보를 보관
-                log.info("에러 메시지={}", e.getMessage());
 
                 for (T item : batchItems) {
 
