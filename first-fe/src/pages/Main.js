@@ -8,7 +8,7 @@ const Main = () => {
 
   return (
     <>
-        <div>
+        <div className='File-Upload'>
             <FileUpload />
         </div>
         <div className="Left-Layer">

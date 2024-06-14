@@ -26,9 +26,11 @@ a {
 
 .App {
   text-align: center;
+  align-items: center;
 }
 
 .App-Container {
+  width: 70%;
   min-width: 90rem;
   align-items: center;
   justify-content: center;
@@ -36,7 +38,7 @@ a {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin: 3rem 3rem;
+  margin: 3rem auto;
 
-  font-size: calc(10px + 2vmin);
+  font-size: 1rem;
 }
