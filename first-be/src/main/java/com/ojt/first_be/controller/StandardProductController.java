@@ -23,11 +23,15 @@ public class StandardProductController {
     public static final String PRODUCTS_XLSX = "attachment; filename=standard_products.xlsx";
     private final StandardService standardService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
+    public ResponseEntity<SaveExcelResponse<Object>> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
 
-        return standardService.saveExcelData(excelFile);
+        SaveExcelResponse<Object> responseBody = standardService.saveExcelData(excelFile);
+
+        if (responseBody.getSuccessCount() > 0) {
+            return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)

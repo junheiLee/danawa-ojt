@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.ojt.first_be.constant.ResultCode.CREATED;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -32,9 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
             throw new RuntimeException("임시");
         }
 
-        List<Category> categories
-                = excelConverter.parseExcel(excelFile.getInputStream(), Category.class);
+        List<Category> categories = excelConverter.parseExcel(excelFile.getInputStream(), Category.class);
 
-        return batchUtil.process(categories, categoryDao::saveAll, categoryDao::save);
+        SaveExcelResponse<Object> result = batchUtil.process(categories, categoryDao::saveAll, categoryDao::save);
+        result.setResultCode(CREATED);
+
+        return result;
     }
 }

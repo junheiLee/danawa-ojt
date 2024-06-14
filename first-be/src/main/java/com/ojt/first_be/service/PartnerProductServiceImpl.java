@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
+import static com.ojt.first_be.constant.ResultCode.CREATED;
 import static com.ojt.first_be.constant.ResultCode.SUCCESS;
 
 @Slf4j
@@ -40,7 +41,10 @@ public class PartnerProductServiceImpl implements PartnerProductService {
         List<PartnerProduct> partnerProducts
                 = excelConverter.parseExcel(excelFile.getInputStream(), PartnerProduct.class);
 
-        return batchUtil.process(partnerProducts, partnerProductDao::saveAll, partnerProductDao::save);
+        SaveExcelResponse<Object> result = batchUtil.process(partnerProducts, partnerProductDao::saveAll, partnerProductDao::save);
+        result.setResultCode(CREATED);
+
+        return result;
     }
 
     @Override
