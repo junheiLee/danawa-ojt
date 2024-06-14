@@ -24,15 +24,11 @@ public class PartnerProductController {
 
     private final PartnerProductService partnerProductService;
 
-    @PostMapping
-    public ResponseEntity<SaveExcelResponse<Object>> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
+    @ResponseStatus(HttpStatus.MULTI_STATUS)
+    @PostMapping("/excel-upload")
+    public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
 
-        SaveExcelResponse<Object> responseBody = partnerProductService.saveExcelData(excelFile);
-
-        if (responseBody.getSuccessCount() > 0) {
-            return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        return partnerProductService.saveExcelData(excelFile);
     }
 
     @ResponseStatus(HttpStatus.OK)
