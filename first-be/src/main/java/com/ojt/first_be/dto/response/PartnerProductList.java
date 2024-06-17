@@ -11,7 +11,6 @@ import java.util.List;
 @ToString
 public class PartnerProductList extends BaseResponse {
 
-    private Integer totalPage;
     private List<PartnerProduct> products;
 
     @Builder
@@ -19,7 +18,6 @@ public class PartnerProductList extends BaseResponse {
                               Integer totalPage,
                               List<PartnerProduct> products) {
         super(resultCode, message);
-        this.totalPage = totalPage;
         this.products = products;
     }
 }

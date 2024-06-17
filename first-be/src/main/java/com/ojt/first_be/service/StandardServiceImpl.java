@@ -2,6 +2,7 @@ package com.ojt.first_be.service;
 
 import com.ojt.first_be.dao.StandardProductDao;
 import com.ojt.first_be.domain.StandardProduct;
+import com.ojt.first_be.dto.response.PageCount;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.dto.response.StandardProductList;
 import com.ojt.first_be.util.batch.BatchUtil;
@@ -48,30 +49,33 @@ public class StandardServiceImpl implements StandardService {
     }
 
     @Override
-    public StandardProductList getStandardProducts(int page, boolean isTotalPageRequired) {
-
-        List<StandardProduct> standardProducts = getProducts(page);
-
-        // 총 페이지 수를 요구하면 DAO 에서 Count, 필요하지 않으면 null
-        Integer totalPage = PagingUtil.getTotalPage(isTotalPageRequired, standardProductDao::countAll);
-
-        return StandardProductList.builder()
-                .resultCode(SUCCESS.name())
-                .message(SUCCESS.getMessage())
-                .totalPage(totalPage)
-                .products(standardProducts)
-                .build();
-    }
-
-    @Override
     public byte[] createExcelFile(int page) throws IOException {
 
         List<StandardProduct> standardProducts = getProducts(page);
         return excelConverter.createExcel(standardProducts, StandardProduct.class);
     }
 
+    @Override
+    public PageCount getCountAboutPage() {
+
+        return PagingUtil.getTotalPage(standardProductDao::countAll);
+    }
+
+    @Override
+    public StandardProductList getStandardProducts(int page) {
+
+        List<StandardProduct> standardProducts = getProducts(page);
+
+        return StandardProductList.builder()
+                .resultCode(SUCCESS.name())
+                .message(SUCCESS.getMessage())
+                .products(standardProducts)
+                .build();
+    }
+
     private List<StandardProduct> getProducts(int page) {
 
         return standardProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
     }
+
 }

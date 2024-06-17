@@ -2,6 +2,7 @@ package com.ojt.first_be.service;
 
 import com.ojt.first_be.dao.PartnerProductDao;
 import com.ojt.first_be.domain.PartnerProduct;
+import com.ojt.first_be.dto.response.PageCount;
 import com.ojt.first_be.dto.response.PartnerProductList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.util.batch.BatchUtil;
@@ -48,30 +49,33 @@ public class PartnerProductServiceImpl implements PartnerProductService {
     }
 
     @Override
-    public PartnerProductList getPartnerProducts(int page, boolean isTotalPageRequired) {
-
-        List<PartnerProduct> partnerProducts = getProducts(page);
-
-        // 총 페이지 수를 요구하면 DAO 에서 Count, 필요하지 않으면 null
-        Integer totalPage = PagingUtil.getTotalPage(isTotalPageRequired, partnerProductDao::countAll);
-
-        return PartnerProductList.builder()
-                .resultCode(SUCCESS.name())
-                .message(SUCCESS.getMessage())
-                .totalPage(totalPage)
-                .products(partnerProducts)
-                .build();
-    }
-
-    @Override
     public byte[] createExcelFile(int page) throws IOException {
 
         List<PartnerProduct> partnerProducts = getProducts(page);
         return excelConverter.createExcel(partnerProducts, PartnerProduct.class);
     }
 
+    @Override
+    public PageCount getCountAboutPage() {
+
+        return PagingUtil.getTotalPage(partnerProductDao::countAll);
+    }
+
+    @Override
+    public PartnerProductList getPartnerProducts(int page) {
+
+        List<PartnerProduct> partnerProducts = getProducts(page);
+
+        return PartnerProductList.builder()
+                .resultCode(SUCCESS.name())
+                .message(SUCCESS.getMessage())
+                .products(partnerProducts)
+                .build();
+    }
+
     private List<PartnerProduct> getProducts(int page) {
 
         return partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
     }
+
 }

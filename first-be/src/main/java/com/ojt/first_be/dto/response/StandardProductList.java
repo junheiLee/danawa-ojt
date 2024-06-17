@@ -11,15 +11,12 @@ import java.util.List;
 @ToString
 public class StandardProductList extends BaseResponse {
 
-    private Integer totalPage;
     private List<StandardProduct> products;
 
     @Builder
     public StandardProductList(String resultCode, String message,
-                               Integer totalPage,
                                List<StandardProduct> products) {
         super(resultCode, message);
-        this.totalPage = totalPage;
         this.products = products;
     }
 }

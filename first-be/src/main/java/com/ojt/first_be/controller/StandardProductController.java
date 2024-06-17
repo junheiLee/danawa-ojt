@@ -1,5 +1,6 @@
 package com.ojt.first_be.controller;
 
+import com.ojt.first_be.dto.response.PageCount;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.dto.response.StandardProductList;
 import com.ojt.first_be.service.StandardService;
@@ -30,14 +31,6 @@ public class StandardProductController {
         return standardService.saveExcelData(excelFile);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping
-    public StandardProductList getStandardProducts(@RequestParam(defaultValue = "1") int page,
-                                                   @RequestParam(defaultValue = "false") boolean isTotalPageRequired) {
-
-        return standardService.getStandardProducts(page, isTotalPageRequired);
-    }
-
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadExcel(@RequestParam(defaultValue = "1") int page) throws IOException {
 
@@ -52,4 +45,19 @@ public class StandardProductController {
                 .body(excelBytes);
 
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/page-info")
+    public PageCount getCountAboutPage() {
+
+        return standardService.getCountAboutPage();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public StandardProductList getStandardProducts(@RequestParam(defaultValue = "1") int page) {
+
+        return standardService.getStandardProducts(page);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ojt.first_be.util.paging;
 
+import com.ojt.first_be.dto.response.PageCount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,15 +12,17 @@ import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
 @Component
 public class PagingUtil {
 
-    public static Integer getTotalPage(boolean isTotalPageRequired, Supplier<Integer> counter) {
+    public static PageCount getTotalPage(Supplier<Integer> counter) {
 
-        if (!isTotalPageRequired) {
-            return null;
-        }
         int totalCount = counter.get();
         int additionalPage = (totalCount % OUTPUT_LIST_LIMIT_SIZE == 0) ? 0 : 1;
+        int totalPage = totalCount / OUTPUT_LIST_LIMIT_SIZE + additionalPage;
 
-        return totalCount / OUTPUT_LIST_LIMIT_SIZE + additionalPage;
+        return PageCount.builder()
+                .totalPage(totalPage)
+                .totalItem(totalCount)
+                .build();
+
     }
 
     public static int calOffset(int page) {
