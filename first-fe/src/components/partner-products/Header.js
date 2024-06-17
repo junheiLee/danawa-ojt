@@ -8,11 +8,16 @@ const Header = (props) => {
     }
 
     return (
-      <div className="Layer-Header">
-          <input style={{margin: "1rem"}} 
-                 type="button" value="다운로드"
-                 onClick={e => handleClick(e)}/>
-      </div>
+        <>
+        <div style={{textAlign:'left', marginTop: "1rem"}}>
+            <h3>협력사 상품</h3>
+        </div>
+        <div className="Layer-Header">
+            <input style={{marginBottom: "1rem"}} 
+                    type="button" value="다운로드"
+                    onClick={e => handleClick(e)}/>
+        </div>
+      </>
     )
 }
 export default Header;
