@@ -71,7 +71,7 @@
         FROM tPartnerProduct PP
                  JOIN tCategory C
                       ON (PP.nCategoryCode = C.nCategoryCode)
-        ORDER BY sPartnerCode
+        ORDER BY sPartnerProductCode
         LIMIT #{limit}
         OFFSET #{offset}
     </select>
