@@ -42,7 +42,7 @@ const ProductList = (props) => {
                 <th style={{minWidth: "5rem"}}>모바일가</th>
                 <th style={{minWidth: "3.7rem"}}>등록일</th>
                 <th style={{minWidth: "3.7rem"}}>url</th>
-                <th style={{minWidth: "3.7rem"}}>이미지url</th>
+                <th style={{minWidth: "3.7rem"}}>이미지</th>
               </tr>
             </thead>
             <tbody>
@@ -56,8 +56,8 @@ const ProductList = (props) => {
                       <td> {product.pcPrice} </td>
                       <td> {product.mobilePrice} </td>
                       <td> {product.createdAt} </td>
-                      <td> {product.url} </td>
-                      <td> {product.imageUrl} </td>
+                      <td> <a href={product.url}>url</a></td>
+                      <td> <a href={product.imageUrl}>이미지</a></td>
                   </tr>
                 ))
               }
