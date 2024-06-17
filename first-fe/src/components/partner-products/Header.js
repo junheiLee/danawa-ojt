@@ -1,10 +1,10 @@
 import '../Header.css'
 import { download } from '../../services/partner-product-service'
 
-const Header = () => {
+const Header = (props) => {
 
     const handleClick = (e) => {
-        download();
+        download(props.page);
     }
 
     return (
