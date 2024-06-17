@@ -1,10 +1,9 @@
-
-
 .Left-Layer {
     width: 50%; 
     min-width: 40rem;
     float: left;
     position: relative;
+    padding-right: 1rem;
 }
   
 .Right-Layer {
@@ -12,6 +11,7 @@
     min-width: 40rem;
     float: left;
     position: relative;
+    padding-left: 1rem;
 }
   
 .File-Upload {

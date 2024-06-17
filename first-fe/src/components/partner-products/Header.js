@@ -1,4 +1,4 @@
-import '../../pages/Header.css'
+import '../Header.css'
 import { download } from '../../services/partner-product-service'
 
 const Header = () => {

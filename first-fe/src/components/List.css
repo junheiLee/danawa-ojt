@@ -1,0 +1,50 @@
+
+table {
+    border: 1px #a39485 solid;
+    font-size: .9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+  
+th {
+text-align: center;
+}
+
+thead {
+font-weight: bold;
+color: #fff;
+background: #73685d;
+}
+
+td, th {
+padding: .5em .5em;
+vertical-align: middle;
+}
+
+td {
+border-bottom: 1px solid rgba(0,0,0,.1);
+background: #fff;
+}
+
+a {
+color: #73685d;
+}
+
+.container {
+    height: 68rem;
+    overflow-y: scroll;
+}
+.container::-webkit-scrollbar {
+    width: 10px;
+}
+.container::-webkit-scrollbar-thumb {
+    background-color: #73685d;
+    border-radius: 10px;
+}
+.container::-webkit-scrollbar-track {
+    background-color: #a39485;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
