@@ -14,7 +14,6 @@ const FileUpload = () => {
         uploadFile(option, formData);
     }
 
-
     return (
       <div>
         <form onSubmit={ e => handleSubmit(e) }>
