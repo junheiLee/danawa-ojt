@@ -24,7 +24,7 @@ public interface PartnerProductService {
      * @param page 현재 페이지
      * @return 페이지에 해당하는 엑셀 byte[]
      */
-    byte[] createExcelFile(int page) throws IOException;
+    byte[] createExcelFile(int page);
 
     /**
      * 페이징 처리를 위한 count 기능

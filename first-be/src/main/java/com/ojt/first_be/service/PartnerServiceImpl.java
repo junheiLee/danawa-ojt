@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-import static com.ojt.first_be.constant.ResultCode.CREATED;
+import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class PartnerServiceImpl implements PartnerService {
         List<Partner> partners = excelConverter.parseExcel(excelFile.getInputStream(), Partner.class);
 
         SaveExcelResponse<Object> result = batchService.process(partners, partnerDao::saveAll);
-        result.setResultCode(CREATED);
+        result.setResultCode(UPLOAD_RESULT);
 
         return result;
     }

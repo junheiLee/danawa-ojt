@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
-import static com.ojt.first_be.constant.ResultCode.CREATED;
+import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 import static com.ojt.first_be.constant.ResultCode.SUCCESS;
 
 @Slf4j
@@ -45,13 +45,13 @@ public class PartnerProductServiceImpl implements PartnerProductService {
                 = excelConverter.parseExcel(excelFile.getInputStream(), PartnerProduct.class);
 
         SaveExcelResponse<Object> result = batchService.process(partnerProducts, partnerProductDao::saveAll);
-        result.setResultCode(CREATED);
+        result.setResultCode(UPLOAD_RESULT);
 
         return result;
     }
 
     @Override
-    public byte[] createExcelFile(int page) throws IOException {
+    public byte[] createExcelFile(int page) {
 
         List<PartnerProduct> partnerProducts = getProducts(page);
         return excelConverter.createExcel(partnerProducts, PartnerProduct.class);

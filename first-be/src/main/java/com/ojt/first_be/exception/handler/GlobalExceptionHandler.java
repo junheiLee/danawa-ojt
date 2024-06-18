@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import static com.ojt.first_be.constant.ResultCode.NO_FILE;
 
 @Slf4j
 @RestControllerAdvice
@@ -46,5 +49,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public void excelHeaderExHandle(ExcelInternalException e) {
 
         log.error("[ExcelException] 해당 없음", e);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MultipartException.class)
+    public BaseResponse excelHandle() {
+        return new BaseResponse(NO_FILE);
     }
 }
