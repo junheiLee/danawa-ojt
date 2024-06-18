@@ -4,6 +4,7 @@ import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.dto.response.BaseResponse;
 import com.ojt.first_be.exception.ExcelInternalException;
 import com.ojt.first_be.exception.custom.NoExcelColumnAnnotationsException;
+import com.ojt.first_be.exception.custom.UnSupportedFileException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ooxml.POIXMLException;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(POIXMLException.class)
     public BaseResponse spreadSheetExHandle(POIXMLException e) {
 
-        log.error("[ExcelException] 스프레드 시트로 업로드={}", e.getMessage());
+        log.error("[ExcelException] 스프레드 시트로 업로드 시도={}", e.getMessage());
         return new BaseResponse(ResultCode.NOT_INTEGRATED_EXCEL_FILE);
+    }
+
+    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    @ExceptionHandler(UnSupportedFileException.class)
+    public BaseResponse excelHeaderExHandle(UnSupportedFileException e) {
+
+        log.error("[ExcelException] excel 외 파일 업로드 시도");
+        return new BaseResponse(e.getResultCode());
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

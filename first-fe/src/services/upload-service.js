@@ -13,7 +13,13 @@ export const uploadFile = async (option, excelFile) => {
         alert(response.data.message);
 
     } catch(error) {
-        alert(error.response.data.message + option);
+
+        if(error.response.data.resultCode === "NOT_HAVE_DOMAIN") {
+            alert(error.response.data.message + option);
+        }else {
+            alert(error.response.data.message);
+        }
+
     }
 
 }

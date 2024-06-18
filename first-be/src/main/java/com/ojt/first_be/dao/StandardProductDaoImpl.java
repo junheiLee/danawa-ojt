@@ -4,7 +4,6 @@ import com.ojt.first_be.dao.mapper.StandardProductMapper;
 import com.ojt.first_be.domain.StandardProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
