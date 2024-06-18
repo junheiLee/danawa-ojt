@@ -26,7 +26,6 @@ public class PagingUtil {
     }
 
     public static int calOffset(int page) {
-        log.info("return value={}", (Math.abs(page) - 1) * OUTPUT_LIST_LIMIT_SIZE);
         return (Math.abs(page) - 1) * OUTPUT_LIST_LIMIT_SIZE;
     }
 }
