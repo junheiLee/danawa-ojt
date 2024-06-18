@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ojt.first_be.dao.mapper.PartnerProductMapper">
+
+    <insert id="insertAll" parameterType="PartnerProduct">
+        INSERT INTO tPartnerProduct (
+                        sPartnerProductCode,
+                        sPartnerCode,
+                        nCategoryCode,
+                        sPartnerProductName,
+                        nPcPrice,
+                        nMobilePrice,
+                        sUrl,
+                        sImageUrl,
+                        dtCreatedAt
+        )
+        VALUES
+            <foreach collection="list" item="PartnerProduct" separator="," >
+                (
+                 #{PartnerProduct.code},
+                 #{PartnerProduct.partnerCode},
+                 #{PartnerProduct.categoryCode},
+                 #{PartnerProduct.name},
+                 #{PartnerProduct.pcPrice},
+                 #{PartnerProduct.mobilePrice},
+                 #{PartnerProduct.url},
+                 #{PartnerProduct.imageUrl},
+                 #{PartnerProduct.createdAt}
+                )
+            </foreach>
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO tPartnerProduct (
+                        sPartnerProductCode,
+                        sPartnerCode,
+                        nCategoryCode,
+                        sPartnerProductName,
+                        nPcPrice,
+                        nMobilePrice,
+                        sUrl,
+                        sImageUrl,
+                        dtCreatedAt
+        )
+        VALUES (
+                #{PartnerProduct.code},
+                #{PartnerProduct.partnerCode},
+                #{PartnerProduct.categoryCode},
+                #{PartnerProduct.name},
+                #{PartnerProduct.pcPrice},
+                #{PartnerProduct.mobilePrice},
+                #{PartnerProduct.url},
+                #{PartnerProduct.imageUrl},
+                #{PartnerProduct.createdAt}
+            )
+    </insert>
+
+    <select id="selectAll" resultType="PartnerProduct">
+        SELECT  PP.nCategoryCode as categoryCode,
+                C.sCategoryName as categoryName,
+                PP.sPartnerCode as partnerCode,
+                PP.sPartnerProductCode as code,
+                PP.sPartnerProductName as name,
+                PP.nPcPrice as pcPrice,
+                PP.nMobilePrice as mobilePrice,
+                PP.dtCreatedAt as createdAt,
+                PP.sUrl as url,
+                PP.sImageUrl as imageUrl
+        FROM tPartnerProduct PP
+                 JOIN tCategory C
+                      ON (PP.nCategoryCode = C.nCategoryCode)
+        ORDER BY sPartnerProductCode
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(sPartnerProductCode)
+        FROM tPartnerProduct
+    </select>
+</mapper>

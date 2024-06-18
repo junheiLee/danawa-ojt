@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ojt.first_be.dao.mapper.StandardProductMapper">
+
+    <insert id="insertAll" parameterType="StandardProduct">
+        INSERT INTO tStandardProduct (
+                    nProductCode,
+                    nCategoryCode,
+                    sProductName,
+                    sBundleCondition,
+                    sDescription,
+                    nLowestPrice,
+                    nAveragePrice,
+                    nPartnerCount
+        )
+        VALUES
+            <foreach collection="list" item="StandardProduct" separator="," >
+                (
+                #{StandardProduct.code},
+                #{StandardProduct.categoryCode},
+                #{StandardProduct.name},
+                #{StandardProduct.bundleCondition},
+                #{StandardProduct.description},
+                #{StandardProduct.lowestPrice},
+                #{StandardProduct.averagePrice},
+                #{StandardProduct.partnerCount}
+                )
+            </foreach>
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO tStandardProduct (
+                                     nProductCode,
+                                     nCategoryCode,
+                                     sProductName,
+                                     sBundleCondition,
+                                     sDescription,
+                                     nLowestPrice,
+                                     nAveragePrice,
+                                     nPartnerCount
+        )
+        VALUES (
+                #{StandardProduct.code},
+                #{StandardProduct.categoryCode},
+                #{StandardProduct.name},
+                #{StandardProduct.bundleCondition},
+                #{StandardProduct.description},
+                #{StandardProduct.lowestPrice},
+                #{StandardProduct.averagePrice},
+                #{StandardProduct.partnerCount}
+        )
+    </insert>
+
+    <select id="selectAll" resultType="StandardProduct">
+        SELECT  SP.nCategoryCode as categoryCode,
+                C.sCategoryName as categoryName,
+                SP.nProductCode as code,
+                SP.sProductName as name,
+                SP.sBundleCondition as bundleCondition,
+                SP.sDescription as description,
+                SP.nLowestPrice as lowestPrice,
+                SP.nAveragePrice as averagePrice,
+                SP.nPartnerCount as partnerCount
+        FROM tStandardProduct SP
+            JOIN tCategory C
+            ON (SP.nCategoryCode = C.nCategoryCode)
+        LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(nProductCode)
+        FROM tStandardProduct
+    </select>
+</mapper>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ojt.first_be.dao.mapper.CategoryMapper">
+
+    <insert id="insertAll" parameterType="Category">
+        INSERT INTO tCategory (
+                nCategoryCode,
+                sCategoryName)
+        VALUES
+            <foreach collection="list" item="Category" separator="," >
+                (
+                #{Category.code},
+                #{Category.name}
+                )
+            </foreach>
+    </insert>
+
+    <insert id="insert">
+        INSERT INTO tCategory (
+                nCategoryCode,
+                sCategoryName)
+        VALUES (
+                #{Category.code},
+                #{Category.name}
+        )
+    </insert>
+</mapper>
