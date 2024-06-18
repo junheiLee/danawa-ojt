@@ -3,7 +3,6 @@ package com.ojt.first_be.dao;
 import com.ojt.first_be.dao.mapper.PartnerProductMapper;
 import com.ojt.first_be.domain.PartnerProduct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
