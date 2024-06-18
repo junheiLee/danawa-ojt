@@ -1,5 +1,6 @@
 package com.ojt.first_be.dto.response;
 
+import com.ojt.first_be.constant.ResultCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,11 @@ public class BaseResponse {
 
     private String resultCode;
     private String message;
+
+    public BaseResponse(ResultCode resultCode) {
+        this.resultCode = resultCode.name();
+        this.message = resultCode.getMessage();
+    }
 
     public BaseResponse(String resultCode, String message) {
         this.resultCode = resultCode;

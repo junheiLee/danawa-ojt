@@ -1,13 +1,15 @@
 package com.ojt.first_be.service;
 
+import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.dao.PartnerProductDao;
 import com.ojt.first_be.domain.PartnerProduct;
 import com.ojt.first_be.dto.response.PageCount;
 import com.ojt.first_be.dto.response.PartnerProductList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
-import com.ojt.first_be.util.batch.BatchUtil;
+import com.ojt.first_be.exception.custom.UnSupportedFileException;
+import com.ojt.first_be.util.batch.BatchService;
 import com.ojt.first_be.util.excel.ExcelConverter;
-import com.ojt.first_be.util.paging.PagingUtil;
+import com.ojt.first_be.util.paging.Paging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ import static com.ojt.first_be.constant.ResultCode.SUCCESS;
 @Service
 public class PartnerProductServiceImpl implements PartnerProductService {
 
-    private final BatchUtil batchUtil;
+    private final BatchService batchService;
     private final ExcelConverter excelConverter;
     private final PartnerProductDao partnerProductDao;
 
@@ -36,13 +38,13 @@ public class PartnerProductServiceImpl implements PartnerProductService {
 
         // 파일이 Excel 확장자(.xlsx, .xls) 확인
         if (!excelConverter.supports(excelFile.getOriginalFilename())) {
-            throw new RuntimeException("임시");
+            throw new UnSupportedFileException(ResultCode.NOT_EXCEL_FILE);
         }
 
         List<PartnerProduct> partnerProducts
                 = excelConverter.parseExcel(excelFile.getInputStream(), PartnerProduct.class);
 
-        SaveExcelResponse<Object> result = batchUtil.process(partnerProducts, partnerProductDao::saveAll, partnerProductDao::save);
+        SaveExcelResponse<Object> result = batchService.process(partnerProducts, partnerProductDao::saveAll);
         result.setResultCode(CREATED);
 
         return result;
@@ -58,7 +60,7 @@ public class PartnerProductServiceImpl implements PartnerProductService {
     @Override
     public PageCount getCountAboutPage() {
 
-        return PagingUtil.getTotalPage(partnerProductDao::countAll);
+        return Paging.getTotalPage(partnerProductDao::countAll);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class PartnerProductServiceImpl implements PartnerProductService {
 
     private List<PartnerProduct> getProducts(int page) {
 
-        return partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, PagingUtil.calOffset(page));
+        return partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, Paging.calOffset(page));
     }
 
 }

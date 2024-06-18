@@ -8,7 +8,9 @@ const ProductList = (props) => {
   const [products, setProducts] = useState([]);
   
   useEffect (() => {
+
     getProducts();
+    
   }, [props.page])
 
   const getProducts = async() => {
@@ -23,7 +25,7 @@ const ProductList = (props) => {
       setProducts((await response).data.products);
 
     } catch (error) {
-  
+      alert(error.response.data.message);
     }
   }
 
@@ -46,7 +48,7 @@ const ProductList = (props) => {
             <tbody>
               {
                 products.map(product => (
-                  <tr key={product.code}>
+                  <tr key={product.code + product.bundleCondition}>
                       <td > {product.categoryName} </td>
                       <td>{ product.code} </td>
                       <td> {product.name} </td>

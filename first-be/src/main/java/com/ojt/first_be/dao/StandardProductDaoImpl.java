@@ -3,11 +3,13 @@ package com.ojt.first_be.dao;
 import com.ojt.first_be.dao.mapper.StandardProductMapper;
 import com.ojt.first_be.domain.StandardProduct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class StandardProductDaoImpl implements StandardProductDao {
@@ -17,22 +19,13 @@ public class StandardProductDaoImpl implements StandardProductDao {
     @Override
     public int saveAll(List<StandardProduct> products) {
 
-
-        try {
-            return standardProductMapper.insertAll(products);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("임시" + "배치 처리 실패");
-        }
+        return standardProductMapper.insertAll(products);
     }
 
     @Override
     public int save(StandardProduct product) {
 
-        try {
-            return standardProductMapper.insert(product);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("임시" + "단일 처리 실패");
-        }
+        return standardProductMapper.insert(product);
     }
 
     @Override
