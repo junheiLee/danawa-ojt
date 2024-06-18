@@ -17,22 +17,13 @@ public class PartnerProductDaoImpl implements PartnerProductDao {
     @Override
     public int saveAll(List<PartnerProduct> partnerProducts) {
 
-        try {
-            return partnerProductMapper.insertAll(partnerProducts);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("임시" + "배치 처리 실패");
-        }
+        return partnerProductMapper.insertAll(partnerProducts);
     }
 
     @Override
     public int save(PartnerProduct partnerProduct) {
 
-        try {
-            return partnerProductMapper.insert(partnerProduct);
-
-        } catch (DataAccessException e) {
-            throw new RuntimeException("임시" + "단일 실패");
-        }
+        return partnerProductMapper.insert(partnerProduct);
     }
 
     @Override

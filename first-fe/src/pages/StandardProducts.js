@@ -8,7 +8,7 @@ import axios from 'axios';
 const StandardProducts = () => {
 
     const [page, setPage] = useState(1);
-    const[itemCount, setItemCount] = useState();
+    const[itemCount, setItemCount] = useState(0);
     
     const getPageInfo = async() => {
         const response = await axios.get(`/standard-products/page-info`, {

@@ -6,7 +6,6 @@ import axios from "axios";
 const ProductList = (props) => {
 
   const [products, setProducts] = useState([]);
-  const [idx, setIdx] = useState(1);
   
   useEffect (() => {
     getProducts();
@@ -48,7 +47,7 @@ const ProductList = (props) => {
             <tbody>
               {
                 products.map((product) => (
-                  <tr key={product.code}>
+                  <tr key={product.partnerCode + "" + product.code}>
                       <td> {product.categoryName} </td>
                       <td> {product.partnerCode} </td>
                       <td> {product.code} </td>

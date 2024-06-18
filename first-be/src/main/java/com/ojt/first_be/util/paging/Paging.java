@@ -10,7 +10,7 @@ import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
 
 @Slf4j
 @Component
-public class PagingUtil {
+public class Paging {
 
     public static PageCount getTotalPage(Supplier<Integer> counter) {
 

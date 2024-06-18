@@ -1,6 +1,9 @@
 package com.ojt.first_be.util.excel;
 
+import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.domain.Uploadable;
+import com.ojt.first_be.exception.ExcelInternalException;
+import com.ojt.first_be.exception.custom.NoExcelColumnAnnotationsException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -11,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,9 @@ public class ExcelConverter {
     private final static String[] EXCEL_EXTENSIONS = {"xls", "xlsx"};
     private final static String UPLOADABLE_METHOD_NAME = "setValuesFromExcel";
     private final static int START_INDEX = 0;
+
+    private final static String INT = "int";
+    private final static String DATE = "java.sql.Date";
 
     /**
      * 해당 파일이 Excel 확장자(.xlsx, .xls)인지 확인
@@ -67,7 +72,7 @@ public class ExcelConverter {
                 );
 
         if (!excelHeaders.equals(fieldNames)) {
-            throw new RuntimeException("임시" + "저장 못하지롱");
+            throw new NoExcelColumnAnnotationsException(ResultCode.NOT_HAVE_DOMAIN);
         }
     }
 
@@ -92,9 +97,8 @@ public class ExcelConverter {
             domain.getMethod(UPLOADABLE_METHOD_NAME, Row.class).invoke(item, row);
             return item;
 
-        } catch (NoSuchMethodException | InvocationTargetException |
-                 InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("임시");
+        } catch (Exception e) {
+            throw new ExcelInternalException("해당 없음", e);
 
         }
     }
@@ -153,13 +157,13 @@ public class ExcelConverter {
 
         try {
             switch (type) {
-                case "int" -> row.createCell(cellIdx, CellType.NUMERIC).setCellValue((double) field.get(item));
-                case "java.sql.Date" -> row.createCell(cellIdx, CellType.FORMULA).setCellValue((Date) field.get(item));
+                case INT -> row.createCell(cellIdx, CellType.NUMERIC).setCellValue((double) field.get(item));
+                case DATE -> row.createCell(cellIdx, CellType.FORMULA).setCellValue((Date) field.get(item));
                 default -> row.createCell(cellIdx, CellType.STRING).setCellValue(String.valueOf(field.get(item)));
             }
         } catch (IllegalAccessException e) {
 
-            throw new RuntimeException("임시");
+            throw new ExcelInternalException("엑셀 CellType에 해당하는 케이스 추가 요망", e);
         }
 
 
