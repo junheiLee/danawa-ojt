@@ -21,7 +21,7 @@ import java.io.IOException;
 @RestController
 public class StandardProductController {
 
-    public static final String PRODUCTS_XLSX = "attachment; filename=standard_products.xlsx";
+    public static final String ATTACHMENT = "attachment; filename=standard_products.xlsx";
     private final StandardService standardService;
 
     @ResponseStatus(HttpStatus.MULTI_STATUS)
@@ -32,12 +32,12 @@ public class StandardProductController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadExcel(@RequestParam(defaultValue = "1") int page) throws IOException {
+    public ResponseEntity<byte[]> downloadExcel(@RequestParam(defaultValue = "1") int page) {
 
         byte[] excelBytes = standardService.createExcelFile(page);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, PRODUCTS_XLSX);
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, ATTACHMENT);
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         return ResponseEntity.ok()

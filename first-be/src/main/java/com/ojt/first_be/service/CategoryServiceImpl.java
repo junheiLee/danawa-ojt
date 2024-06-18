@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-import static com.ojt.first_be.constant.ResultCode.CREATED;
+import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = excelConverter.parseExcel(excelFile.getInputStream(), Category.class);
 
         SaveExcelResponse<Object> result = batchService.process(categories, categoryDao::saveAll);
-        result.setResultCode(CREATED);
+        result.setResultCode(UPLOAD_RESULT);
 
         return result;
     }

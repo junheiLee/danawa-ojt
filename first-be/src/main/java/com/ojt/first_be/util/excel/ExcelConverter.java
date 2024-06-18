@@ -43,7 +43,7 @@ public class ExcelConverter {
     }
 
     /**
-     * 엑셀 파일을 한 줄씩 읽어 객체로 변경
+     * 엑셀 파일을 읽어 해당 도메인과 일치하는 헤더인지 확인 후 객체로 변경
      *
      * @param inputStream  대상 엑셀 파일의 inputStream
      * @param targetDomain 객체 타입
@@ -63,7 +63,7 @@ public class ExcelConverter {
         return items;
     }
 
-    private void validHeaders(Row headerRow, List<String> fieldNames) {
+    private void validHeaders(Row headerRow, List<String> domainFields) {
 
         List<String> excelHeaders = new ArrayList<>();
         headerRow.cellIterator()
@@ -71,7 +71,7 @@ public class ExcelConverter {
                         eachCell -> excelHeaders.add(eachCell.getStringCellValue())
                 );
 
-        if (!excelHeaders.equals(fieldNames)) {
+        if (!excelHeaders.equals(domainFields)) {
             throw new NoExcelColumnAnnotationsException(ResultCode.NOT_HAVE_DOMAIN);
         }
     }
@@ -110,7 +110,7 @@ public class ExcelConverter {
      * @param targetDomain 객체 타입
      * @return 엑셀 파일을 byte[]로 반환
      */
-    public <T> byte[] createExcel(List<T> items, Class<T> targetDomain) throws IOException {
+    public <T> byte[] createExcel(List<T> items, Class<T> targetDomain) {
 
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet(targetDomain.getName());
@@ -119,9 +119,8 @@ public class ExcelConverter {
         renderBody(sheet, items, targetDomain);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        wb.write(out);
+        setWorkbook(wb, out);
 
-        wb.close();
         return out.toByteArray();
 
     }
@@ -148,6 +147,15 @@ public class ExcelConverter {
                 createRow(row, cellIdx, item, field);
                 cellIdx++;
             }
+        }
+    }
+
+    private void setWorkbook(Workbook wb, ByteArrayOutputStream out) {
+        try {
+            wb.write(out);
+            wb.close();
+        } catch (IOException e) {
+            throw new ExcelInternalException("Workbook 오류", e);
         }
     }
 
