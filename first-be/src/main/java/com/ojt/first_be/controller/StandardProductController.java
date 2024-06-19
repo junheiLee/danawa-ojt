@@ -1,6 +1,6 @@
 package com.ojt.first_be.controller;
 
-import com.ojt.first_be.dto.response.PageCount;
+import com.ojt.first_be.domain.search.Condition;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.dto.response.StandardProductList;
 import com.ojt.first_be.service.StandardService;
@@ -32,9 +32,9 @@ public class StandardProductController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadExcel(@RequestParam(defaultValue = "1") int page) {
+    public ResponseEntity<byte[]> downloadExcel(@ModelAttribute Condition condition) {
 
-        byte[] excelBytes = standardService.createExcelFile(page);
+        byte[] excelBytes = standardService.createExcelFile(condition);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_DISPOSITION, ATTACHMENT);
@@ -47,17 +47,10 @@ public class StandardProductController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/page-info")
-    public PageCount getCountAboutPage() {
-
-        return standardService.getCountAboutPage();
-    }
-
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public StandardProductList getStandardProducts(@RequestParam(defaultValue = "1") int page) {
+    public StandardProductList getStandardProducts(@ModelAttribute Condition condition) {
 
-        return standardService.getStandardProducts(page);
+        return standardService.getStandardProducts(condition);
     }
 
 }

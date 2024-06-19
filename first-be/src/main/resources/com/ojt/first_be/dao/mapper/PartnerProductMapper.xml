@@ -59,25 +59,58 @@
 
     <select id="selectAll" resultType="PartnerProduct">
         SELECT  PP.nCategoryCode as categoryCode,
-                C.sCategoryName as categoryName,
-                PP.sPartnerCode as partnerCode,
-                PP.sPartnerProductCode as code,
-                PP.sPartnerProductName as name,
-                PP.nPcPrice as pcPrice,
-                PP.nMobilePrice as mobilePrice,
-                PP.dtCreatedAt as createdAt,
-                PP.sUrl as url,
-                PP.sImageUrl as imageUrl
+        C.sCategoryName as categoryName,
+        PP.sPartnerCode as partnerCode,
+        PP.sPartnerProductCode as code,
+        PP.sPartnerProductName as name,
+        PP.nPcPrice as pcPrice,
+        PP.nMobilePrice as mobilePrice,
+        PP.dtCreatedAt as createdAt,
+        PP.sUrl as url,
+        PP.sImageUrl as imageUrl
         FROM tPartnerProduct PP
-                 JOIN tCategory C
-                      ON (PP.nCategoryCode = C.nCategoryCode)
-        ORDER BY sPartnerProductCode
+        JOIN tCategory C
+        ON (PP.nCategoryCode = C.nCategoryCode)
+        <where>
+            <if test="category != null and category != ''">
+                AND C.sCategoryName = #{category}
+            </if>
+            <if test="searchCode != null and searchCode != ''">
+                AND PP.sPartnerProductCode LIKE CONCAT('%',#{searchCode},'%')
+            </if>
+            <if test="searchName != null and searchName != ''">
+                AND PP.sPartnerProductName LIKE CONCAT('%',#{searchName},'%')
+            </if>
+        </where>
+        <trim prefix="ORDER BY">
+            <choose>
+                <when test="orderBy == 'createdAt'">
+                    PP.dtCreatedAt
+                </when>
+                <otherwise>
+                    PP.sPartnerProductCode
+                </otherwise>
+            </choose>
+        </trim>
         LIMIT #{limit}
         OFFSET #{offset}
     </select>
 
     <select id="countAll">
         SELECT COUNT(sPartnerProductCode)
-        FROM tPartnerProduct
+        FROM tPartnerProduct PP
+                 JOIN tCategory C
+                      ON (PP.nCategoryCode = C.nCategoryCode)
+        <where>
+            <if test="category != null and category != ''">
+                AND C.sCategoryName = #{category}
+            </if>
+            <if test="searchCode != null and searchCode != ''">
+                AND PP.sPartnerProductCode LIKE CONCAT('%',#{searchCode},'%')
+            </if>
+            <if test="searchName != null and searchName != ''">
+                AND PP.sPartnerProductName LIKE CONCAT('%',#{searchName},'%')
+            </if>
+        </where>
     </select>
 </mapper>

@@ -3,13 +3,12 @@ package com.ojt.first_be.service;
 import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.dao.PartnerProductDao;
 import com.ojt.first_be.domain.PartnerProduct;
-import com.ojt.first_be.dto.response.PageCount;
+import com.ojt.first_be.domain.search.Condition;
 import com.ojt.first_be.dto.response.PartnerProductList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.exception.custom.UnSupportedFileException;
 import com.ojt.first_be.util.batch.BatchService;
 import com.ojt.first_be.util.excel.ExcelConverter;
-import com.ojt.first_be.util.paging.Paging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-import static com.ojt.first_be.constant.Common.OUTPUT_LIST_LIMIT_SIZE;
-import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 import static com.ojt.first_be.constant.ResultCode.SUCCESS;
+import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -51,33 +49,29 @@ public class PartnerProductServiceImpl implements PartnerProductService {
     }
 
     @Override
-    public byte[] createExcelFile(int page) {
+    public byte[] createExcelFile(Condition condition) {
 
-        List<PartnerProduct> partnerProducts = getProducts(page);
+        List<PartnerProduct> partnerProducts = getProducts(condition);
         return excelConverter.createExcel(partnerProducts, PartnerProduct.class);
     }
 
     @Override
-    public PageCount getCountAboutPage() {
+    public PartnerProductList getPartnerProducts(Condition condition) {
 
-        return Paging.getTotalPage(partnerProductDao::countAll);
-    }
-
-    @Override
-    public PartnerProductList getPartnerProducts(int page) {
-
-        List<PartnerProduct> partnerProducts = getProducts(page);
+        List<PartnerProduct> partnerProducts = getProducts(condition);
+        int totalItemsCount = partnerProductDao.countAll(condition);
 
         return PartnerProductList.builder()
                 .resultCode(SUCCESS.name())
                 .message(SUCCESS.getMessage())
+                .totalItemsCount(totalItemsCount)
                 .products(partnerProducts)
                 .build();
     }
 
-    private List<PartnerProduct> getProducts(int page) {
+    private List<PartnerProduct> getProducts(Condition condition) {
 
-        return partnerProductDao.findAll(OUTPUT_LIST_LIMIT_SIZE, Paging.calOffset(page));
+        return partnerProductDao.findAll(condition);
     }
 
 }

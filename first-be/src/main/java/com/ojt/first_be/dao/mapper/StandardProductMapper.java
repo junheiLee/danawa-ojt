@@ -1,6 +1,7 @@
 package com.ojt.first_be.dao.mapper;
 
 import com.ojt.first_be.domain.StandardProduct;
+import com.ojt.first_be.domain.search.Condition;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface StandardProductMapper {
 
     int insert(StandardProduct product);
 
-    List<StandardProduct> selectAll(int limit, int offset);
+    List<StandardProduct> selectAll(Condition condition);
 
-    int countAll();
+    int countAll(Condition condition);
 }

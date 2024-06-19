@@ -7,17 +7,19 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Getter
 @ToString
+@Getter
 public class PartnerProductList extends BaseResponse {
 
+    private int totalItemsCount;
     private List<PartnerProduct> products;
 
     @Builder
     public PartnerProductList(String resultCode, String message,
-                              Integer totalPage,
+                              int totalItemsCount,
                               List<PartnerProduct> products) {
         super(resultCode, message);
+        this.totalItemsCount = totalItemsCount;
         this.products = products;
     }
 }

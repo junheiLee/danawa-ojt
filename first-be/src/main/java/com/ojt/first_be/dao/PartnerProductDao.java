@@ -1,6 +1,7 @@
 package com.ojt.first_be.dao;
 
 import com.ojt.first_be.domain.PartnerProduct;
+import com.ojt.first_be.domain.search.Condition;
 
 import java.util.List;
 
@@ -10,8 +11,7 @@ public interface PartnerProductDao {
 
     int save(PartnerProduct partnerProduct);
 
-    List<PartnerProduct> findAll(int limit, int offset);
+    List<PartnerProduct> findAll(Condition condition);
 
-    int countAll();
-
+    int countAll(Condition condition);
 }
