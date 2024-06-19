@@ -26,4 +26,11 @@
                 #{Category.name}
         )
     </insert>
+
+    <select id="selectAll" resultType="Category">
+        SELECT nCategoryCode as code,
+               sCategoryName as name
+        FROM tCategory
+
+    </select>
 </mapper>

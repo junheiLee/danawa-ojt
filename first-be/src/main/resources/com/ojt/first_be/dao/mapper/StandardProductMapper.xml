@@ -71,19 +71,19 @@
                 AND C.sCategoryName = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND PP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND SP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
             </if>
             <if test="searchName != null and searchName != ''">
-                AND PP.sProductName LIKE CONCAT('%',#{searchName},'%')
+                AND SP.sProductName LIKE CONCAT('%',#{searchName},'%')
             </if>
         </where>
         <trim prefix="ORDER BY">
             <choose>
-                <when test="orderBy == 'createdAt'">
-                    PP.dtCreatedAt
+                <when test="orderBy == 'partnerCount'">
+                    SP.nPartnerCount
                 </when>
                 <otherwise>
-                    PP.sPartnerProductCode
+                    SP.nProductCode
                 </otherwise>
             </choose>
         </trim>
@@ -99,10 +99,10 @@
                 AND C.sCategoryName = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND PP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND SP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
             </if>
             <if test="searchName != null and searchName != ''">
-                AND PP.sProductName LIKE CONCAT('%',#{searchName},'%')
+                AND SP.sProductName LIKE CONCAT('%',#{searchName},'%')
             </if>
         </where>
     </select>
