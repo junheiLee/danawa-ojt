@@ -66,6 +66,27 @@
         FROM tStandardProduct SP
             JOIN tCategory C
             ON (SP.nCategoryCode = C.nCategoryCode)
+        <where>
+            <if test="category != null and category != ''">
+                AND C.sCategoryName = #{category}
+            </if>
+            <if test="searchCode != null and searchCode != ''">
+                AND PP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+            </if>
+            <if test="searchName != null and searchName != ''">
+                AND PP.sProductName LIKE CONCAT('%',#{searchName},'%')
+            </if>
+        </where>
+        <trim prefix="ORDER BY">
+            <choose>
+                <when test="orderBy == 'createdAt'">
+                    PP.dtCreatedAt
+                </when>
+                <otherwise>
+                    PP.sPartnerProductCode
+                </otherwise>
+            </choose>
+        </trim>
         LIMIT #{limit}
         OFFSET #{offset}
     </select>
@@ -73,5 +94,16 @@
     <select id="countAll">
         SELECT COUNT(nProductCode)
         FROM tStandardProduct
+        <where>
+            <if test="category != null and category != ''">
+                AND C.sCategoryName = #{category}
+            </if>
+            <if test="searchCode != null and searchCode != ''">
+                AND PP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+            </if>
+            <if test="searchName != null and searchName != ''">
+                AND PP.sProductName LIKE CONCAT('%',#{searchName},'%')
+            </if>
+        </where>
     </select>
 </mapper>

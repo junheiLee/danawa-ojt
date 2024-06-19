@@ -2,6 +2,7 @@ package com.ojt.first_be.dao;
 
 import com.ojt.first_be.dao.mapper.StandardProductMapper;
 import com.ojt.first_be.domain.StandardProduct;
+import com.ojt.first_be.domain.search.Condition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -28,14 +29,13 @@ public class StandardProductDaoImpl implements StandardProductDao {
     }
 
     @Override
-    public List<StandardProduct> findAll(int limit, int offset) {
+    public List<StandardProduct> findAll(Condition condition) {
 
-        return standardProductMapper.selectAll(limit, offset);
+        return standardProductMapper.selectAll(condition);
     }
 
     @Override
-    public int countAll() {
-
-        return standardProductMapper.countAll();
+    public int countAll(Condition condition) {
+        return standardProductMapper.countAll(condition);
     }
 }
