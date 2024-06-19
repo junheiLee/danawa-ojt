@@ -5,27 +5,9 @@ import axios from "axios";
 
 const ProductList = (props) => {
 
-  const [products, setProducts] = useState([]);
-  
-  useEffect (() => {
-    getProducts();
-  }, [props.page])
-
-  const getProducts = async() => {
-
-    try {
-      const response =  axios.get(`/partner-products?page=${props.page}`, {
-          headers: {
-              "Content-Type": "applicstion/json"
-          }
-      })
-
-      setProducts((await response).data.products);
-
-    } catch (error) {
-  
-    }
-  }
+  useEffect(() => {
+    alert("머야")
+  }, [props.products])
 
   return (
     <>
@@ -46,7 +28,7 @@ const ProductList = (props) => {
             </thead>
             <tbody>
               {
-                products.map((product) => (
+                props.products.map((product) => (
                   <tr key={product.partnerCode + "" + product.code}>
                       <td> {product.categoryName} </td>
                       <td> {product.partnerCode} </td>
