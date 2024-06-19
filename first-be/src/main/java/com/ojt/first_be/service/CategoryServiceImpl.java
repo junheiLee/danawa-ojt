@@ -3,6 +3,7 @@ package com.ojt.first_be.service;
 import com.ojt.first_be.constant.ResultCode;
 import com.ojt.first_be.dao.CategoryDao;
 import com.ojt.first_be.domain.Category;
+import com.ojt.first_be.dto.response.CategoryList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.exception.custom.UnSupportedFileException;
 import com.ojt.first_be.util.batch.BatchService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.List;
 
@@ -42,5 +44,16 @@ public class CategoryServiceImpl implements CategoryService {
         result.setResultCode(UPLOAD_RESULT);
 
         return result;
+    }
+
+    @Override
+    public CategoryList getCategories() {
+
+        List<Category> categories = categoryDao.findAll();
+
+        return CategoryList.builder()
+                .resultCode(ResultCode.SUCCESS)
+                .categories(categories)
+                .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.ojt.first_be.controller;
 
+import com.ojt.first_be.dto.response.CategoryList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +26,8 @@ public class CategoryController {
         return categoryService.saveExcelData(excelFile);
     }
 
+    @GetMapping
+    public CategoryList getCategories() {
+        return categoryService.getCategories();
+    }
 }
