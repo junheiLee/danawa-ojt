@@ -1,33 +1,6 @@
 import '../List.css'
-import {useState, useEffect} from "react";
-import axios from "axios";
-
 
 const ProductList = (props) => {
-
-  const [products, setProducts] = useState([]);
-  
-  useEffect (() => {
-
-    getProducts();
-    
-  }, [props.page])
-
-  const getProducts = async() => {
-
-    try {
-      const response =  axios.get(`/standard-products?page=${props.page}`, {
-          headers: {
-              "Content-Type": "applicstion/json"
-          }
-      })
-
-      setProducts((await response).data.products);
-
-    } catch (error) {
-      alert(error.response.data.message);
-    }
-  }
 
   return (
     <>
@@ -47,7 +20,7 @@ const ProductList = (props) => {
             </thead>
             <tbody>
               {
-                products.map(product => (
+                props.products.map(product => (
                   <tr key={product.code + product.bundleCondition}>
                       <td > {product.categoryName} </td>
                       <td>{ product.code} </td>

@@ -5,43 +5,59 @@ import Pagination from "react-js-pagination"
 import {useEffect, useState} from "react";
 import axios from 'axios';
 
-const StandardProducts = () => {
+const StandardProducts = (props) => {
 
+    const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
-    const[itemCount, setItemCount] = useState(0);
-    
-    const getPageInfo = async() => {
-        const response = await axios.get(`/standard-products/page-info`, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        setItemCount(response.data.totalItem);
-    }
+
+    const [category, setCategory] = useState();
+    const[orderBy, setOrderBy] = useState("");
+    const [searchName, setSearchName] = useState("");
+    const [searchCode, setSearchCode] = useState("");
 
     const handlePageChange = (page) => {
         setPage(page);
     }
 
     useEffect(()=>{
-        getPageInfo();
-    }, [])
+        getProducts();
+    }, [page, searchName, searchCode, category, orderBy])
 
-    useEffect(()=>{
-    }, [page])
+    const getProducts = async() => {
+
+        try {
+          const response =  axios.get(`/standard-products?page=${page}&searchName=${searchName}&searchCode=${searchCode}`, {
+              headers: {
+                  "Content-Type": "applicstion/json"
+              }
+          })
+    
+          setProducts((await response).data.products);
+    
+        } catch (error) {
+          alert(error.response.data.message);
+        }
+    }
 
     return (
         <>
             <div>
-                <Header page={page}/>
+                <Header           
+                    page={page}
+                    setSearchName={input => setSearchName(input)}
+                    setSearchCode={input => setSearchCode(input)}
+                    setCategory={option => setCategory(option)}
+                    setOrderBy={option => setOrderBy(option)}
+                    categories={props.categories}
+                />
             </div>
             <div>
-                <ProductList page={page}/>
+                <ProductList products={products}/>
             </div>
             <div>
                 <Pagination 
                     activePage={page}
-                    totalItemsCount={itemCount}
+                    totalItemsCount={10}
                     itemsCountPerPage={30}
                     pageRangeDisplayed={5}
                     prevPageText={"<"}
