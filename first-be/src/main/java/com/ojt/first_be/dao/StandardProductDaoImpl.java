@@ -30,7 +30,7 @@ public class StandardProductDaoImpl implements StandardProductDao {
 
     @Override
     public List<StandardProduct> findAll(Condition condition) {
-
+        log.info(condition.toString());
         return standardProductMapper.selectAll(condition);
     }
 

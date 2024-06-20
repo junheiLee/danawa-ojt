@@ -67,8 +67,8 @@
             JOIN tCategory C
             ON (SP.nCategoryCode = C.nCategoryCode)
         <where>
-            <if test="category != null and category != ''">
-                AND C.sCategoryName = #{category}
+            <if test="category != null and category != 0">
+                AND C.nCategoryCode = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
                 AND SP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
@@ -96,13 +96,13 @@
         FROM tStandardProduct
         <where>
             <if test="category != null and category != ''">
-                AND C.sCategoryName = #{category}
+                AND nCategoryCode = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND SP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND nProductCode LIKE CONCAT('%',#{searchCode},'%')
             </if>
             <if test="searchName != null and searchName != ''">
-                AND SP.sProductName LIKE CONCAT('%',#{searchName},'%')
+                AND sProductName LIKE CONCAT('%',#{searchName},'%')
             </if>
         </where>
     </select>

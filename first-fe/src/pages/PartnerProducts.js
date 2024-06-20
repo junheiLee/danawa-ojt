@@ -8,36 +8,37 @@ import axios from 'axios';
 const PartnerProducts = (props) => {
 
     const [products, setProducts] = useState([]);
+    const [totalItemsCount, setTotalItemsCount] = useState(0);
     const [page, setPage] = useState(1);
 
-    const [searchName, setSearchName] = useState("");
-    const [searchCode, setSearchCode] = useState("");
+    const [searchName, setSearchName] = useState('');
+    const [searchCode, setSearchCode] = useState('');
 
-    const [category, setCategory] = useState("");
-    const[orderBy, setOrderBy] = useState("");
+    const [category, setCategory] = useState('');
+    const[orderBy, setOrderBy] = useState('');
 
     const handlePageChange = (page) => {
         setPage(page);
     }
 
     useEffect(()=>{
-
         getProducts();
-        alert("바껴서 호출댓지")
-
     }, [page, searchName, searchCode, category, orderBy])
 
     const getProducts = async() => {
+        
+        const url = decodeURI(`/partner-products?page=${page}&category=${category}&searchName=${searchName}&searchCode=${searchCode}`);
 
         try {
-          const response =  axios.get(`/partner-products?page=${page}&searchName=${searchName}&searchCode=${searchCode}`, {
+          const response =  axios.get(url, {
               headers: {
                   "Content-Type": "applicstion/json"
               }
           })
-    
+
+          setTotalItemsCount((await response).data.totalItemsCount);
           setProducts((await response).data.products);
-    
+
         } catch (error) {
           alert(error.response.data.message);
         }
@@ -48,8 +49,9 @@ const PartnerProducts = (props) => {
             <div>
                 <Header
                     page={page}
-                    setSearchName={input => setSearchName(input)}
-                    setSearchCode={input => setSearchCode(input)}
+                    setPage={page => setPage(page)}
+                    setSearchName={setSearchName}
+                    setSearchCode={setSearchCode}
                     setCategory={option => setCategory(option)}
                     setOrderBy={option => setOrderBy(option)}
                     categories={props.categories}
@@ -61,7 +63,7 @@ const PartnerProducts = (props) => {
             <div>
                 <Pagination 
                     activePage={page}
-                    totalItemsCount={10}
+                    totalItemsCount={totalItemsCount}
                     itemsCountPerPage={30}
                     pageRangeDisplayed={5}
                     prevPageText={"<"}

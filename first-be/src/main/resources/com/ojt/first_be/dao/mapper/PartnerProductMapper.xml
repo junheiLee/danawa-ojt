@@ -72,8 +72,8 @@
         JOIN tCategory C
         ON (PP.nCategoryCode = C.nCategoryCode)
         <where>
-            <if test="category != null and category != ''">
-                AND C.sCategoryName = #{category}
+            <if test="category != null and category != 0">
+                AND C.nCategoryCode = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
                 AND PP.sPartnerProductCode LIKE CONCAT('%',#{searchCode},'%')
@@ -98,18 +98,16 @@
 
     <select id="countAll">
         SELECT COUNT(sPartnerProductCode)
-        FROM tPartnerProduct PP
-                 JOIN tCategory C
-                      ON (PP.nCategoryCode = C.nCategoryCode)
+        FROM tPartnerProduct
         <where>
             <if test="category != null and category != ''">
-                AND C.sCategoryName = #{category}
+                AND nCategoryCode = #{category}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND PP.sPartnerProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND sPartnerProductCode LIKE CONCAT('%',#{searchCode},'%')
             </if>
             <if test="searchName != null and searchName != ''">
-                AND PP.sPartnerProductName LIKE CONCAT('%',#{searchName},'%')
+                AND sPartnerProductName LIKE CONCAT('%',#{searchName},'%')
             </if>
         </where>
     </select>

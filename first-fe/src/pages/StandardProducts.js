@@ -8,12 +8,14 @@ import axios from 'axios';
 const StandardProducts = (props) => {
 
     const [products, setProducts] = useState([]);
+    const [totalItemsCount, setTotalItemsCount] = useState(0);
     const [page, setPage] = useState(1);
 
-    const [category, setCategory] = useState();
-    const[orderBy, setOrderBy] = useState("");
-    const [searchName, setSearchName] = useState("");
-    const [searchCode, setSearchCode] = useState("");
+    const [category, setCategory] = useState('');
+    const [orderBy, setOrderBy] = useState('');
+
+    const [searchName, setSearchName] = useState('');
+    const [searchCode, setSearchCode] = useState('');
 
     const handlePageChange = (page) => {
         setPage(page);
@@ -25,15 +27,18 @@ const StandardProducts = (props) => {
 
     const getProducts = async() => {
 
+        const url = decodeURI(`/standard-products?page=${page}&category=${category}&searchName=${searchName}&searchCode=${searchCode}`);
+
         try {
-          const response =  axios.get(`/standard-products?page=${page}&searchName=${searchName}&searchCode=${searchCode}`, {
+          const response =  axios.get(url, {
               headers: {
                   "Content-Type": "applicstion/json"
               }
           })
     
+          setTotalItemsCount((await response).data.totalItemsCount);
           setProducts((await response).data.products);
-    
+
         } catch (error) {
           alert(error.response.data.message);
         }
@@ -44,6 +49,7 @@ const StandardProducts = (props) => {
             <div>
                 <Header           
                     page={page}
+                    setPage={page => setPage(page)}
                     setSearchName={input => setSearchName(input)}
                     setSearchCode={input => setSearchCode(input)}
                     setCategory={option => setCategory(option)}
@@ -57,7 +63,7 @@ const StandardProducts = (props) => {
             <div>
                 <Pagination 
                     activePage={page}
-                    totalItemsCount={10}
+                    totalItemsCount={totalItemsCount}
                     itemsCountPerPage={30}
                     pageRangeDisplayed={5}
                     prevPageText={"<"}

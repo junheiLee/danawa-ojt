@@ -4,10 +4,12 @@ import com.ojt.first_be.dao.mapper.PartnerProductMapper;
 import com.ojt.first_be.domain.PartnerProduct;
 import com.ojt.first_be.domain.search.Condition;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class PartnerProductDaoImpl implements PartnerProductDao {
@@ -28,6 +30,8 @@ public class PartnerProductDaoImpl implements PartnerProductDao {
 
     @Override
     public List<PartnerProduct> findAll(Condition condition) {
+        log.info(condition.toString());
+
         return partnerProductMapper.selectAll(condition);
     }
 
