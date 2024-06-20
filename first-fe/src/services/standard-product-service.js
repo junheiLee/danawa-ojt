@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const download = async (page, category, searchName, searchCode) => {
+export const download = async (page, category, searchCode, searchName) => {
 
     try {
 

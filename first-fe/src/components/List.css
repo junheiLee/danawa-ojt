@@ -44,7 +44,7 @@ color: #73685d;
     border-radius: 10px;
 }
 .container::-webkit-scrollbar-track {
-    background-color: #a39485;
+    background-color: white;
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px white;
 }

@@ -24,7 +24,7 @@ const Header = (props) => {
             <select name="category" onChange={(e) => {
                                                         props.setCategory(e.target.value);
                                                         props.setPage(1)}}>
-                <option>카테고리 선택</option>
+                <option value="">카테고리 선택</option>
             {
                 props.categories.map(category => (
                     <option key={category.code} value={category.code}>{category.name}</option>
