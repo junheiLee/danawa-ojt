@@ -22,7 +22,7 @@ public class Condition {
     private String searchName;
     private String searchCode;
 
-    private String category;
+    private Integer category;
     private String orderBy;
 
     public Condition setPageInfo(int limit, int offset) {

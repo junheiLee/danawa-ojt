@@ -1,6 +1,11 @@
 import '../List.css'
+import {useEffect} from "react";
 
 const ProductList = (props) => {
+
+  useEffect(() => {
+    console.log(props.products)
+  }, [props.products])
 
   return (
     <>
@@ -10,7 +15,7 @@ const ProductList = (props) => {
               <tr>
                 <th style={{minWidth: "5rem"}}>대분류명</th>
                 <th style={{minWidth: "5rem"}}>상품코드</th>
-                <th style={{minWidth: "3.7rem"}}>상품명</th>
+                <th style={{minWidth: "4rem"}}>상품명</th>
                 <th style={{minWidth: "5rem"}}>묶음조건</th>
                 <th style={{minWidth: "12rem"}}>설명</th>
                 <th style={{minWidth: "3.7rem"}}>최저가</th>
