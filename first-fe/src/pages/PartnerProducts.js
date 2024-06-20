@@ -50,9 +50,13 @@ const PartnerProducts = (props) => {
                 <Header
                     page={page}
                     setPage={page => setPage(page)}
+                    searchName={searchName}
                     setSearchName={setSearchName}
+                    searchCode={searchCode}
                     setSearchCode={setSearchCode}
+                    category={category}
                     setCategory={option => setCategory(option)}
+                    orderBy={orderBy}
                     setOrderBy={option => setOrderBy(option)}
                     categories={props.categories}
                 />

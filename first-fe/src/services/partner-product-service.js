@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const download = async (page) => {
+export const download = async (page, category, searchName, searchCode) => {
 
     try {
 
-        const { data, headers } = await axios.get(`/partner-products/download?page=${page}`, {
+        const { data, headers } = await axios.get(`/partner-products/download?page=${page}&category=${category}&searchName=${searchName}&searchCode=${searchCode}`, {
             responseType: 'blob',
         });
         
