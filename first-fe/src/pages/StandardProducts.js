@@ -47,12 +47,16 @@ const StandardProducts = (props) => {
     return (
         <>
             <div>
-                <Header           
+                <Header
                     page={page}
                     setPage={page => setPage(page)}
-                    setSearchName={input => setSearchName(input)}
-                    setSearchCode={input => setSearchCode(input)}
+                    searchName={searchName}
+                    setSearchName={setSearchName}
+                    searchCode={searchCode}
+                    setSearchCode={setSearchCode}
+                    category={category}
                     setCategory={option => setCategory(option)}
+                    orderBy={orderBy}
                     setOrderBy={option => setOrderBy(option)}
                     categories={props.categories}
                 />

@@ -4,7 +4,7 @@ import { download } from '../../services/partner-product-service'
 const Header = (props) => {
 
     const downloadClick = (e) => {
-        download(props.page);
+        download(props.page, props.category, props.searchCode, props.searchName);
     }
 
     const setSearch = (e) => {
@@ -35,7 +35,7 @@ const Header = (props) => {
             </select>
 
 
-            <label style={{marginLeft:'5.2rem'}}>코드: </label>
+            <label style={{marginLeft:'17rem'}}>코드: </label>
             <input type="text" className="code"></input>
             <label>이름: </label>
             <input type="text" className='name'></input>

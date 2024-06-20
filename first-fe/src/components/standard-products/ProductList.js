@@ -4,7 +4,7 @@ import {useEffect} from "react";
 const ProductList = (props) => {
 
   useEffect(() => {
-    console.log(props.products)
+    
   }, [props.products])
 
   return (
