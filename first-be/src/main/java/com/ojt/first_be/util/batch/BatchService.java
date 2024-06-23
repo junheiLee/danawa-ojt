@@ -16,10 +16,10 @@ public class BatchService {
 
     /**
      * 객체 처리 시, 설정한 개수만큼 한 번에 INSERT 하고,
-     * 실패 시 단 건으로 처리하며, 실패한 데이터 정보를 담기 위한 로직
+     * 실패 시, 로그에 실패 항목을 저장
      *
      * @param items             저장할 객체 리스트
-     * @param batchSaveFunction 해당 객체 리스트 여러 건 저장 함수
+     * @param batchSaveFunction 해당 객체 리스트 여러 건 저장 함수 (파라미터: 저장할 객체 리스트, 리턴: 성공 개수)
      * @param <T>               처리하는 객체 타입
      * @return 저장 결과 (성공, 실패 개수 등 로직 성공 여부)
      */

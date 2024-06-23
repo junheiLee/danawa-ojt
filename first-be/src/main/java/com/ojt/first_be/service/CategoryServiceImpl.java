@@ -14,11 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.List;
-
-import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,8 +23,8 @@ import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final BatchService batchService;
     private final ExcelConverter excelConverter;
+    private final BatchService batchService;
     private final CategoryDao categoryDao;
 
     @Override
@@ -41,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = excelConverter.parseExcel(excelFile.getInputStream(), Category.class);
 
         SaveExcelResponse<Object> result = batchService.process(categories, categoryDao::saveAll);
-        result.setResultCode(UPLOAD_RESULT);
+        result.setResultCode(ResultCode.UPLOAD_RESULT);
 
         return result;
     }

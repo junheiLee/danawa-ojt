@@ -24,7 +24,7 @@ import java.util.List;
 public class ExcelConverter {
 
     private final static String[] EXCEL_EXTENSIONS = {"xls", "xlsx"};
-    private final static String UPLOADABLE_METHOD_NAME = "setValuesFromExcel";
+    private final static String SET_VALUES_FROM_EXCEL = "setValuesFromExcel";
     private final static int START_INDEX = 0;
 
     private final static String INT = "int";
@@ -94,7 +94,8 @@ public class ExcelConverter {
 
         try {
             T item = domain.getDeclaredConstructor().newInstance();
-            domain.getMethod(UPLOADABLE_METHOD_NAME, Row.class).invoke(item, row);
+            // 도메인이 구현한 Uploadable 인터페이스의 setValuesFromExcel 함수를 이름으로 가져와 사용
+            domain.getMethod(SET_VALUES_FROM_EXCEL, Row.class).invoke(item, row);
             return item;
 
         } catch (Exception e) {
@@ -118,11 +119,10 @@ public class ExcelConverter {
         renderHeaders(sheet.createRow(START_INDEX), getFields(targetDomain));  // 첫 행 헤더 정보 기입
         renderBody(sheet, items, targetDomain);
 
+        // 다운로드하는 byte[] 생성 및 리턴
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        setWorkbook(wb, out);
-
+        writeAndCloseWorkbookHandleIOException(wb, out);
         return out.toByteArray();
-
     }
 
     private void renderHeaders(Row headerRow, List<String> fieldNames) {
@@ -144,22 +144,23 @@ public class ExcelConverter {
 
             for (Field field : targetDomain.getDeclaredFields()) {
                 field.setAccessible(true);
-                createRow(row, cellIdx, item, field);
+                createCell(row, cellIdx, item, field);
                 cellIdx++;
             }
         }
     }
 
-    private void setWorkbook(Workbook wb, ByteArrayOutputStream out) {
+    private void writeAndCloseWorkbookHandleIOException(Workbook wb, ByteArrayOutputStream out) {
         try {
             wb.write(out);
             wb.close();
+
         } catch (IOException e) {
             throw new ExcelInternalException("Workbook 오류", e);
         }
     }
 
-    private <T> void createRow(Row row, int cellIdx, T item, Field field) {
+    private <T> void createCell(Row row, int cellIdx, T item, Field field) {
 
         String type = item.getClass().getTypeName();
 
@@ -169,11 +170,10 @@ public class ExcelConverter {
                 case DATE -> row.createCell(cellIdx, CellType.FORMULA).setCellValue((Date) field.get(item));
                 default -> row.createCell(cellIdx, CellType.STRING).setCellValue(String.valueOf(field.get(item)));
             }
-        } catch (IllegalAccessException e) {
 
+        } catch (IllegalAccessException e) {
             throw new ExcelInternalException("엑셀 CellType에 해당하는 케이스 추가 요망", e);
         }
-
     }
 
     private <T> List<String> getFields(Class<T> domain) {
@@ -186,6 +186,5 @@ public class ExcelConverter {
 
         return clazzFields;
     }
-
 
 }

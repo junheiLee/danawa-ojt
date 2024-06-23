@@ -5,8 +5,6 @@ import lombok.Getter;
 @Getter
 public enum ResultCode {
 
-    POSSIBLE("처리 가능합니다."),
-
     SUCCESS("성공적으로 처리되었습니다."),
     UPLOAD_RESULT("생성: %d개, 실패: %d개"),
 

@@ -51,7 +51,6 @@ public class StandardProduct implements Uploadable {
         this.lowestPrice = lowestPrice;
         this.averagePrice = averagePrice;
         this.partnerCount = partnerCount;
-
     }
 
     @Override

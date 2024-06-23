@@ -27,8 +27,8 @@ import static com.ojt.first_be.constant.ResultCode.UPLOAD_RESULT;
 @Service
 public class PartnerProductServiceImpl implements PartnerProductService {
 
-    private final BatchService batchService;
     private final ExcelConverter excelConverter;
+    private final BatchService batchService;
     private final PartnerProductDao partnerProductDao;
 
     @Override

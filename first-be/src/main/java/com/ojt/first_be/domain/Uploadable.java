@@ -6,6 +6,11 @@ import org.apache.poi.ss.usermodel.Row;
 
 public interface Uploadable {
 
+    /**
+     * 엑셀의 각 Cell Idx의 값을 읽어 객체 필드에 담는 함수
+     *
+     * @param row 읽어야 하는 Row
+     */
     void setValuesFromExcel(Row row);
 
     /**

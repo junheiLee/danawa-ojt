@@ -26,13 +26,13 @@ public class PartnerProductController {
     private final PartnerProductService partnerProductService;
 
     @ResponseStatus(HttpStatus.MULTI_STATUS)
-    @PostMapping("/excel-upload")
-    public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
+    @PostMapping("/upload-excel")
+    public SaveExcelResponse<Object> uploadExcel(@RequestParam MultipartFile excelFile) throws IOException {
 
         return partnerProductService.saveExcelData(excelFile);
     }
 
-    @GetMapping("/download")
+    @GetMapping("/download-excel")
     public ResponseEntity<byte[]> downloadExcel(@ModelAttribute Condition condition) {
 
         byte[] excelBytes = partnerProductService.createExcelFile(condition);
@@ -44,7 +44,6 @@ public class PartnerProductController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(excelBytes);
-
     }
 
     @ResponseStatus(HttpStatus.OK)

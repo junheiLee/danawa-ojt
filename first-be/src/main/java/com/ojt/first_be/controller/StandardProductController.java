@@ -22,16 +22,17 @@ import java.io.IOException;
 public class StandardProductController {
 
     public static final String ATTACHMENT = "attachment; filename=standard_products.xlsx";
+
     private final StandardService standardService;
 
     @ResponseStatus(HttpStatus.MULTI_STATUS)
-    @PostMapping("/excel-upload")
-    public SaveExcelResponse<Object> uploadExcelData(@RequestParam MultipartFile excelFile) throws IOException {
+    @PostMapping("/upload-excel")
+    public SaveExcelResponse<Object> uploadExcel(@RequestParam MultipartFile excelFile) throws IOException {
 
         return standardService.saveExcelData(excelFile);
     }
 
-    @GetMapping("/download")
+    @GetMapping("/download-excel")
     public ResponseEntity<byte[]> downloadExcel(@ModelAttribute Condition condition) {
 
         byte[] excelBytes = standardService.createExcelFile(condition);
@@ -43,7 +44,6 @@ public class StandardProductController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(excelBytes);
-
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -60,7 +60,6 @@ public class PartnerProduct implements Uploadable {
 
         this.url = url;
         this.imageUrl = imageUrl;
-
     }
 
     @Override

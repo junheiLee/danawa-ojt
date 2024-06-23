@@ -4,7 +4,7 @@ export const download = async (page, category, searchCode, searchName) => {
 
     try {
 
-        const { data, headers } = await axios.get(`/standard-products/download?page=${page}&category=${category}&searchName=${searchName}&searchCode=${searchCode}`, {
+        const { data, headers } = await axios.get(`/standard-products/download-excel?page=${page}&category=${category}&searchName=${searchName}&searchCode=${searchCode}`, {
             responseType: 'blob',
         });
         const blob = new Blob([data], {
