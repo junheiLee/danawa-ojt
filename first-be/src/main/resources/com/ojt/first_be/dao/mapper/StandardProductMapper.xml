@@ -54,24 +54,24 @@
     </insert>
 
     <select id="selectAll" resultType="StandardProduct">
-        SELECT  SP.nCategoryCode as categoryCode,
-                C.sCategoryName as categoryName,
-                SP.nProductCode as code,
-                SP.sProductName as name,
-                SP.sBundleCondition as bundleCondition,
-                SP.sDescription as description,
-                SP.nLowestPrice as lowestPrice,
-                SP.nAveragePrice as averagePrice,
-                SP.nPartnerCount as partnerCount
+        SELECT  SP.nCategoryCode AS categoryCode,
+                C.sCategoryName AS categoryName,
+                SP.nProductCode AS code,
+                SP.sProductName AS name,
+                SP.sBundleCondition AS bundleCondition,
+                SP.sDescription AS description,
+                SP.nLowestPrice AS lowestPrice,
+                SP.nAveragePrice AS averagePrice,
+                SP.nPartnerCount AS partnerCount
         FROM tStandardProduct SP
             JOIN tCategory C
             ON (SP.nCategoryCode = C.nCategoryCode)
         <where>
-            <if test="category != null and category != 0">
-                AND C.nCategoryCode = #{category}
+            <if test="categoryCode != null and categoryCode != 0">
+                AND C.nCategoryCode = #{categoryCode}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND SP.nProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND SP.nProductCode = #{searchCode}
             </if>
             <if test="searchName != null and searchName != ''">
                 AND SP.sProductName LIKE CONCAT('%',#{searchName},'%')
@@ -95,11 +95,11 @@
         SELECT COUNT(nProductCode)
         FROM tStandardProduct
         <where>
-            <if test="category != null and category != ''">
-                AND nCategoryCode = #{category}
+            <if test="categoryCode != null and categoryCode != ''">
+                AND nCategoryCode = #{categoryCode}
             </if>
             <if test="searchCode != null and searchCode != ''">
-                AND nProductCode LIKE CONCAT('%',#{searchCode},'%')
+                AND nProductCode = #{searchCode}
             </if>
             <if test="searchName != null and searchName != ''">
                 AND sProductName LIKE CONCAT('%',#{searchName},'%')

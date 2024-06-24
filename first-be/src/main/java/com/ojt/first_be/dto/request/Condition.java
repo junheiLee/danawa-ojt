@@ -1,4 +1,4 @@
-package com.ojt.first_be.domain.search;
+package com.ojt.first_be.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ public class Condition {
     private String searchName;
     private String searchCode;
 
-    private Integer category;
+    private Integer categoryCode;
     private String orderBy;
 
     public Condition setPageInfo(int limit, int offset) {

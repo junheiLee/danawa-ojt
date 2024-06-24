@@ -1,7 +1,7 @@
 package com.ojt.first_be.dao;
 
 import com.ojt.first_be.domain.PartnerProduct;
-import com.ojt.first_be.domain.search.Condition;
+import com.ojt.first_be.dto.request.Condition;
 
 import java.util.List;
 

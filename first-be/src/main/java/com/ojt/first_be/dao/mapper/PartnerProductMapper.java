@@ -1,7 +1,7 @@
 package com.ojt.first_be.dao.mapper;
 
 import com.ojt.first_be.domain.PartnerProduct;
-import com.ojt.first_be.domain.search.Condition;
+import com.ojt.first_be.dto.request.Condition;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

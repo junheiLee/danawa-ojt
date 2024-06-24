@@ -1,6 +1,6 @@
 package com.ojt.first_be.controller;
 
-import com.ojt.first_be.domain.search.Condition;
+import com.ojt.first_be.dto.request.Condition;
 import com.ojt.first_be.dto.response.PartnerProductList;
 import com.ojt.first_be.dto.response.SaveExcelResponse;
 import com.ojt.first_be.service.PartnerProductService;
@@ -26,13 +26,13 @@ public class PartnerProductController {
     private final PartnerProductService partnerProductService;
 
     @ResponseStatus(HttpStatus.MULTI_STATUS)
-    @PostMapping("/upload-excel")
+    @PostMapping("/upload/excel")
     public SaveExcelResponse<Object> uploadExcel(@RequestParam MultipartFile excelFile) throws IOException {
 
         return partnerProductService.saveExcelData(excelFile);
     }
 
-    @GetMapping("/download-excel")
+    @GetMapping("/download/excel")
     public ResponseEntity<byte[]> downloadExcel(@ModelAttribute Condition condition) {
 
         byte[] excelBytes = partnerProductService.createExcelFile(condition);

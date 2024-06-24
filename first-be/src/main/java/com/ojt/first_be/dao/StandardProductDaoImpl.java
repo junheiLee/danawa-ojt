@@ -2,7 +2,7 @@ package com.ojt.first_be.dao;
 
 import com.ojt.first_be.dao.mapper.StandardProductMapper;
 import com.ojt.first_be.domain.StandardProduct;
-import com.ojt.first_be.domain.search.Condition;
+import com.ojt.first_be.dto.request.Condition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
