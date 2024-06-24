@@ -19,9 +19,4 @@ public class PartnerDaoImpl implements PartnerDao {
         return partnerMapper.insertAll(partners);
     }
 
-    @Override
-    public int save(Partner partner) {
-
-        return partnerMapper.insert(partner);
-    }
 }

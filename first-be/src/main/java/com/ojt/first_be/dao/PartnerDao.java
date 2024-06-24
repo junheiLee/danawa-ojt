@@ -8,5 +8,4 @@ public interface PartnerDao {
 
     int saveAll(List<Partner> partners);
 
-    int save(Partner partner);
 }

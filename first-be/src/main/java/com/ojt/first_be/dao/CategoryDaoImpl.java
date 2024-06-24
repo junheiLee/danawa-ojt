@@ -22,12 +22,6 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public int save(Category category) {
-
-        return categoryMapper.insert(category);
-    }
-
-    @Override
     public List<Category> findAll() {
         return categoryMapper.selectAll();
     }

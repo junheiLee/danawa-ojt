@@ -9,8 +9,6 @@ public interface PartnerProductDao {
 
     int saveAll(List<PartnerProduct> partnerProducts);
 
-    int save(PartnerProduct partnerProduct);
-
     List<PartnerProduct> findAll(Condition condition);
 
     int countAll(Condition condition);

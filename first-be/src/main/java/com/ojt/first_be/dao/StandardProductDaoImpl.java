@@ -23,12 +23,6 @@ public class StandardProductDaoImpl implements StandardProductDao {
     }
 
     @Override
-    public int save(StandardProduct product) {
-
-        return standardProductMapper.insert(product);
-    }
-
-    @Override
     public List<StandardProduct> findAll(Condition condition) {
         log.info(condition.toString());
         return standardProductMapper.selectAll(condition);

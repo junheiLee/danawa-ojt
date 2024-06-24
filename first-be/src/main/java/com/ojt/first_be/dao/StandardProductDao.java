@@ -9,8 +9,6 @@ public interface StandardProductDao {
 
     int saveAll(List<StandardProduct> products);
 
-    int save(StandardProduct product);
-
     List<StandardProduct> findAll(Condition condition);
 
     int countAll(Condition condition);

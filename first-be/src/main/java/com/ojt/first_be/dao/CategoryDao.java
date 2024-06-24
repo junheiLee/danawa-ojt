@@ -8,7 +8,5 @@ public interface CategoryDao {
 
     int saveAll(List<Category> categories);
 
-    int save(Category category);
-
     List<Category> findAll();
 }

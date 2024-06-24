@@ -23,12 +23,6 @@ public class PartnerProductDaoImpl implements PartnerProductDao {
     }
 
     @Override
-    public int save(PartnerProduct partnerProduct) {
-
-        return partnerProductMapper.insert(partnerProduct);
-    }
-
-    @Override
     public List<PartnerProduct> findAll(Condition condition) {
         log.info(condition.toString());
 
