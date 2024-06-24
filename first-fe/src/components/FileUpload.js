@@ -1,6 +1,9 @@
 import { uploadFile } from "../services/upload-service";
+import {useState} from "react";
+import Loading from './Loading';
 
 const FileUpload = () => {
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async(e) => {
 
@@ -11,11 +14,12 @@ const FileUpload = () => {
         const formData = new FormData();
         formData.append("excelFile", excelFile.files[0]);
         
-        uploadFile(option, formData);
+        uploadFile(option, formData, setLoading);
     }
 
     return (
       <div>
+        {loading? <Loading /> : null}
         <form onSubmit={ e => handleSubmit(e) }>
           <label> File Upload:  </label>
           <input type="file" 

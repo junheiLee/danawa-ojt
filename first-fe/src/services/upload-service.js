@@ -1,15 +1,15 @@
 import axios from "axios";
 
-export const uploadFile = async (option, excelFile) => {
+export const uploadFile = async (option, excelFile, setLoading) => {
 
     try {
-
+        setLoading(true);
         const response = await axios.post(`/${option}/upload-excel`, excelFile, {
             headers: {
                 "Content-type": "multipart/form-data"
             }
         });
-
+        setLoading(false);
         alert(response.data.message);
 
     } catch(error) {
