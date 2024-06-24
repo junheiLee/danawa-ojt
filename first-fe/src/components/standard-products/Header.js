@@ -13,6 +13,7 @@ const Header = (props) => {
         let name = document.querySelector(".name").value;
         props.setSearchCode(code);
         props.setSearchName(name);
+        props.setPage(1);
     }
 
     return (

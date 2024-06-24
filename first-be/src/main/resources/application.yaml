@@ -20,3 +20,13 @@ spring:
 mybatis:
   type-aliases-package: com.ojt.first_be.domain
 
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: DEBUG
+    com:
+      ojt:
+        first_be:
+          dao:
+            mapper: TRACE

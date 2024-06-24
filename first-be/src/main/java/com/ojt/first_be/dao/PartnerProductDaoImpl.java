@@ -24,7 +24,6 @@ public class PartnerProductDaoImpl implements PartnerProductDao {
 
     @Override
     public List<PartnerProduct> findAll(Condition condition) {
-        log.info(condition.toString());
 
         return partnerProductMapper.selectAll(condition);
     }
